@@ -1,0 +1,76 @@
+<!-- Table of Roles -->
+<div *ngIf="listUser">
+  <table class="table table-hover table-bordered col-md-12">
+      <thead class="bg-dark text-white">
+          <th>id</th>
+          <th>name</th>
+          <th>serialNumber</th>
+          <th>description</th>
+          <th>enable</th>
+
+          <th>operations</th>
+      </thead>
+      <tbody class="bg-white text-dark">
+          <tr *ngFor="let sensor of sensors">
+              <td>{{sensor.id}}</td>
+              <td>{{sensor.name}}</td>
+              <td>{{sensor.serialNumber}}</td>
+              <td>{{sensor.description}}</td>
+              <td>{{sensor.enable}}</td>
+
+
+              <td>
+                  <button class='btn btn-success mr-2 btn-sm' (click)="updateSensor(sensor)">Edit</button>
+                  <button class='btn btn-danger mr-2 btn-sm' (click)="deleteSensor(sensor)">Delete</button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  <!-- <button class='btn btn-info mr-2 btn-sm' (click)="updateDepartement(departement)">Add new Departement</button> -->
+  <button type="button" class="btn btn-info btn-sm" (click)="newSensor()">Create</button>
+</div>
+
+<div *ngIf="addUpdate" class="col-md-7">
+  <form (ngSubmit)="processForm()">
+    <!-- name -->
+    <div class="form-group">
+        <input type="text" name="name" placeholder="name" class='form-control'
+            [(ngModel)]="sensorObj.name" />
+    </div>
+
+    <!-- serialNumber -->
+    <div class="form-group">
+      <input type="text" name="serialNumber" placeholder="serialNumber" class='form-control'
+          [(ngModel)]="sensorObj.serialNumber" />
+  </div>
+
+   <!-- description -->
+   <div class="form-group">
+    <input type="text" name="description" placeholder="description" class='form-control'
+        [(ngModel)]="sensorObj.description" />
+</div>
+
+<!-- type -->
+<div class="form-group">
+  <select name="enable" placeholder="enable" class='form-control'
+  [(ngModel)]="sensorObj.enable">
+    <option value="true">true</option>
+    <option value="false">false</option>
+  </select>
+</div>
+
+<!-- tyres -->
+<div class="form-group">
+  <select name="tyre" id="tyre" class="form-control" [(ngModel)]="sensorObj.tyre">
+      <option *ngFor="let items of tyres" [ngValue]="items">{{ items.sensor ==null ? items.serialNumber : disabled }}</option>
+  </select>
+</div>
+
+    
+
+    <div class="form-group">
+        <input type="submit" class='btn-sm btn btn-primary' value="Save" />
+    </div>
+
+  </form>
+</div>

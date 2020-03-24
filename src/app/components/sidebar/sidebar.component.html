@@ -1,0 +1,57 @@
+<aside class="sidebar shadow-sm">
+  <nav class="sidebar-menu pt-3 pb-3">
+    
+    <ul class="menu-items">
+      <li >
+        <a href="#" routerLink="/dashboard" routerLinkActive="active">
+          <i class="fa fa-tv"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" routerLink="/sensors" routerLinkActive="active">
+          <i class="fas fa-bell"></i>
+          <span>Sensors</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" routerLink="/tyres" routerLinkActive="active">
+          <i class="fas fa-dot-circle"></i>
+          <span>Tyres</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" routerLink="/vehicles" routerLinkActive="active">
+          <i class="fas fa-plane"></i>
+          <span>Vehicles</span>
+        </a>
+      </li>
+      <li *ngIf="isAdmin()">
+        <a href="#" routerLink="/companies" routerLinkActive="active">
+          <i class="far fa-building"></i>
+          <span>Companies</span>
+        </a>
+      </li>
+      <li *ngIf="isAdmin()">
+        <a href="#" routerLink="/users" routerLinkActive="active">
+          <i class="fas fa-users"></i>
+          <span>Users</span>
+        </a>
+      </li>
+      <li *ngIf="isAdmin()">
+        <a href="#" routerLink="/departements" routerLinkActive="active">
+          <i class="fas fa-building"></i>
+          <span>Departement</span>
+        </a>
+      </li>
+      <li *ngIf="isAdmin()">
+        <a href="#" routerLink="/roles" routerLinkActive="active">
+          <i class="fas fa-user-tag"></i>
+          <span>Role</span>
+        </a>
+      </li>
+      
+    </ul>
+      
+  </nav>
+</aside>

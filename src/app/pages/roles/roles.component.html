@@ -1,0 +1,38 @@
+<!-- Table of Roles -->
+<div *ngIf="listRole">
+    <table class="table table-hover table-bordered col-md-6">
+        <thead class="bg-dark text-white">
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+    
+            <th>operations</th>
+        </thead>
+        <tbody class="bg-white text-dark">
+            <tr *ngFor="let role of roles">
+                <td>{{role.id}}</td>
+                <td>{{role.name}}</td>
+                <td>{{role.description}}</td>
+    
+                <td>
+                    <button class='btn btn-success mr-2 btn-sm' (click)="update(role)">Edit</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+  </div>
+  
+  <div *ngIf="addUpdate" class="col-md-7"> 
+      <form (ngSubmit)="updateDescription(role)" >
+        <input type="hidden" name="name" [(ngModel)]="role.name" />
+          <div class="form-group">
+              <input type="text" name="description" placeholder="Description" class='form-control' [(ngModel)]="role.description" />
+          </div>
+          
+          <div class="form-group">
+              <input type="submit"  class='btn-sm btn btn-primary' value="Save" />
+          </div>
+          
+      </form>
+  </div>

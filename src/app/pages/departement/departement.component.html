@@ -1,0 +1,57 @@
+<div *ngIf="listUser">
+    <table class="table  table-hover table-bordered col-md-6">
+        <thead class="bg-dark text-white">
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+
+            <th>operations</th>
+        </thead>
+        <tbody class="bg-white text-dark">
+            <tr *ngFor="let departement of departements">
+                <td>{{departement.id}}</td>
+                <td>{{departement.name}}</td>
+                <td>{{departement.description}}</td>
+
+                <td>
+                    <button class='btn btn-success mr-2 btn-sm' (click)="updateDepartement(departement)">Edit</button>
+                    <button class='btn btn-danger mr-2 btn-sm' (click)="deleteDepartement(departement)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <button class='btn btn-info mr-2 btn-sm' (click)="updateDepartement(departement)">Add new Departement</button> -->
+    <button type="button" class="btn btn-info btn-sm" (click)="newDepartement()">Create</button>
+</div>
+
+<div *ngIf="addUpdate" class="col-md-7">
+    <form (ngSubmit)="processForm(departement)">
+
+        <div class="form-group">
+            <input type="text" name="name" placeholder="name" class='form-control' [(ngModel)]="departement.name"
+                #name="ngModel" minlength="4" required />
+        </div>
+        <!-- validation -->
+        <div *ngIf="name.invalid && (name.dirty || name.Untouched)" class="alert alert-danger">
+
+            <div *ngIf="name.errors.required">
+                Name is required.
+            </div>
+            <div *ngIf="name.errors.minlength">
+                Name must be at least 4 characters
+            </div>
+        </div>
+        <!-- validation end here -->
+
+        <div class="form-group">
+            <input type="text" name="description" placeholder="Description" class='form-control'
+                [(ngModel)]="departement.description" />
+        </div>
+
+
+        <div class="form-group">
+            <input type="submit" [disabled]="name.invalid" class='btn-sm btn btn-primary' value="Save" />
+        </div>
+
+    </form>
+</div>

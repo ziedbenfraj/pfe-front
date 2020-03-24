@@ -1,0 +1,103 @@
+<!-- Table of Roles -->
+<div *ngIf="listUser">
+    <table class="table table-hover table-bordered col-md-12">
+        <thead class="bg-dark text-white">
+            <th>id</th>
+            <th>userName</th>
+            <th>email</th>
+            <th>address</th>
+            <th>phoneNumber</th>
+            <th>birthDate</th>
+            <th>departement</th>
+            <th>role</th>
+
+            <th>operations</th>
+        </thead>
+        <tbody class="bg-white text-dark">
+            <tr *ngFor="let user of users">
+                <td>{{user.id}}</td>
+                <td>{{user.userName}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.address}}</td>
+                <td>{{user.phoneNumber}}</td>
+                <td>{{user.birthDate}}</td>
+                <td>{{user.departement!=null ? user.departement.name : "default"}}</td>
+                <td>{{user.role!=null ? user.role.name : "default"}}</td>
+
+                <td>
+                    <button class='btn btn-success mr-2 btn-sm' (click)="updateDepartement(user)">Edit</button>
+                    <button class='btn btn-danger mr-2 btn-sm' (click)="deleteUsers(user)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <button class='btn btn-info mr-2 btn-sm' (click)="updateDepartement(departement)">Add new Departement</button> -->
+    <button type="button" class="btn btn-info btn-sm" (click)="newUser()">Create</button>
+</div>
+
+<div *ngIf="addUpdate" class="col-md-7">
+    <form (ngSubmit)="processForm()">
+        <!-- first name -->
+        <div class="form-group">
+            <input type="text" name="firstName" placeholder="firstName" class='form-control'
+                [(ngModel)]="userObj.firstName" />
+        </div>
+        <!-- last name -->
+        <div class="form-group">
+            <input type="text" name="lastName" placeholder="lastName" class='form-control'
+                [(ngModel)]="userObj.lastName" />
+        </div>
+        <!-- email -->
+        <div class="form-group">
+            <input type="email" name="email" placeholder="email" class='form-control' [(ngModel)]="userObj.email" />
+        </div>
+        <!-- address -->
+        <div class="form-group">
+            <input type="text" name="address" placeholder="address" class='form-control' [(ngModel)]="userObj.address" />
+        </div>
+        <!-- phoneNumber -->
+        <div class="form-group">
+            <input type="text" name="phoneNumber" placeholder="phoneNumber" class='form-control'
+                [(ngModel)]="userObj.phoneNumber" />
+        </div>
+        <!-- birthDate -->
+        <div class="form-group">
+            <input type="date" name="birthDate" placeholder="birthDate" class='form-control'
+                [(ngModel)]="userObj.birthDate" />
+        </div>
+        <!-- userName -->
+        <div class="form-group">
+            <input type="text" name="userName" placeholder="userName" class='form-control'
+                [(ngModel)]="userObj.userName" />
+        </div>
+        <!-- password -->
+        <div class="form-group">
+            <input type="text" name="password" placeholder="password" class='form-control'
+                [(ngModel)]="userObj.password" />
+        </div>
+        <!-- departement -->
+        <div class="form-group">
+            <select name="departement" id="departement" class="form-control" [(ngModel)]="userObj.departement">
+                <option *ngFor="let items of departements" [ngValue]="items">{{ items.name }}</option>
+            </select>
+        </div>
+        <!-- role -->
+        <div class="form-group">
+            <select name="role" id="role" class="form-control" [(ngModel)]="userObj.role">
+                <option *ngFor="let item of roles" [ngValue]="item">{{ item.name }}</option>
+            </select>
+        </div>
+
+        <!-- activated -->
+        <div class="form-group">
+            <input type="hidden" name="activated" class="form-control" [(ngModel)]="userObj.activated" value="true" />
+        </div>
+
+
+
+        <div class="form-group">
+            <input type="submit" class='btn-sm btn btn-primary' value="Save" />
+        </div>
+
+    </form>
+</div>

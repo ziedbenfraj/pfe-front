@@ -1,0 +1,68 @@
+<!-- Table of Roles -->
+<div *ngIf="listUser">
+  <table class="table table-hover table-bordered col-md-12">
+      <thead class="bg-dark text-white">
+          <th>id</th>
+          <th>serialNumber</th>
+          <th>productCode</th>
+          <th>productDescription</th>
+          <th>brandName</th>
+
+          <th>operations</th>
+      </thead>
+      <tbody class="bg-white text-dark">
+          <tr *ngFor="let tyre of tyres">
+              <td>{{tyre.id}}</td>
+              <td>{{tyre.serialNumber}}</td>
+              <td>{{tyre.productCode}}</td>
+              <td>{{tyre.productDescription}}</td>
+              <td>{{tyre.brandName}}</td>
+
+
+              <td>
+                  <button class='btn btn-success mr-2 btn-sm' (click)="updateTyre(tyre)">Edit</button>
+                  <button class='btn btn-danger mr-2 btn-sm' (click)="deleteTyre(tyre)">Delete</button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  <!-- <button class='btn btn-info mr-2 btn-sm' (click)="updateDepartement(departement)">Add new Departement</button> -->
+  <button type="button" class="btn btn-info btn-sm" (click)="newTyre()">Create</button>
+</div>
+
+<div *ngIf="addUpdate" class="col-md-7">
+  <form (ngSubmit)="processForm()">
+    <!-- serialNumber -->
+    <div class="form-group">
+        <input type="text" name="serialNumber" placeholder="serialNumber" class='form-control'
+            [(ngModel)]="tyreObj.serialNumber" />
+    </div>
+
+    <!-- productCode -->
+    <div class="form-group">
+      <input type="text" name="productCode" placeholder="productCode" class='form-control'
+          [(ngModel)]="tyreObj.productCode" />
+    </div>
+
+   <!-- productDescription -->
+   <div class="form-group">
+    <input type="text" name="productDescription" placeholder="productDescription" class='form-control'
+        [(ngModel)]="tyreObj.productDescription" />
+    </div>
+    <!-- brandName -->
+   <div class="form-group">
+    <input type="text" name="brandName" placeholder="brandName" class='form-control'
+        [(ngModel)]="tyreObj.brandName" />
+    </div>
+
+    
+
+
+    
+
+    <div class="form-group">
+        <input type="submit" class='btn-sm btn btn-primary' value="Save" />
+    </div>
+
+  </form>
+</div>

@@ -1,0 +1,75 @@
+<!-- Table of Roles -->
+<div *ngIf="listUser">
+  <table class="table  table-hover table-bordered col-md-12">
+      <thead class="bg-dark text-white">
+          <th>Id</th>
+          <th>name</th>
+          <th>code</th>
+          <th>adresse</th>
+          <th>email</th>
+          <th>phoneNumber</th>
+          <th>country</th>
+
+          <th>operations</th>
+      </thead>
+      <tbody class="bg-white text-dark" *ngIf="companies!=undefined">
+          <tr *ngFor="let companie of companies">
+              <td>{{companie.id}}</td>
+              <td>{{companie.name}}</td>
+              <td>{{companie.code}}</td>
+              <td>{{companie.adresse}}</td>
+              <td>{{companie.email}}</td>
+              <td>{{companie.phoneNumber}}</td>
+              <td>{{companie.country}}</td>
+
+              <td>
+                  <button class='btn btn-success mr-2 btn-sm' (click)="updateCompanie(companie)">Edit</button>
+                  <button class='btn btn-danger mr-2 btn-sm ' (click)="deleteCompanie(companie)">Delete</button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  <!-- <button class='btn btn-info mr-2 btn-sm' (click)="updateDepartement(departement)">Add new Departement</button> -->
+  <button type="button" class="btn btn-info btn-sm" (click)="newCompanie()">Create</button>
+</div>
+
+<div *ngIf="addUpdate" class="col-md-7">
+  <form (ngSubmit)="processForm(companie)">
+
+    <!-- name -->
+    <div class="form-group">
+        <input type="text" name="name" placeholder="name" class='form-control' [(ngModel)]="companie.name"
+             />
+    </div>
+    <!-- code -->
+    <div class="form-group">
+      <input type="text" name="code" placeholder="code" class='form-control' [(ngModel)]="companie.code"
+          />
+    </div>
+    <!-- adresse -->
+    <div class="form-group">
+      <input type="text" name="adresse" placeholder="adresse" class='form-control' [(ngModel)]="companie.adresse"
+           />
+    </div>
+    <!-- email -->
+    <div class="form-group">
+      <input type="email" name="email" placeholder="email" class='form-control' [(ngModel)]="companie.email"
+          />
+    </div>
+    <!-- phoneNumber -->
+    <div class="form-group">
+      <input type="text" name="phoneNumber" placeholder="phoneNumber" class='form-control' [(ngModel)]="companie.phoneNumber"
+           />
+    </div>
+    <!-- country -->
+    <div class="form-group">
+      <input type="text" name="country" placeholder="country" class='form-control' [(ngModel)]="companie.country"
+           />
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class='btn-sm btn btn-primary' value="Save" />
+    </div>
+
+  </form>
+</div>

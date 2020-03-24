@@ -1,0 +1,55 @@
+<!-- Table of Roles -->
+<div *ngIf="listUser">
+  <table class="table table-hover table-bordered col-md-12">
+      <thead class="bg-dark text-white">
+          <th>id</th>
+          <th>type</th>
+          <th>registrationNumber</th>
+          <th>company</th>
+
+          <th>operations</th>
+      </thead>
+      <tbody class="bg-white text-dark">
+          <tr *ngFor="let vehicle of vehicles">
+              <td>{{vehicle.id}}</td>
+              <td>{{vehicle.type}}</td>
+              <td>{{vehicle.registrationNumber}}</td>
+              <td>{{vehicle.company.name}}</td>
+
+              <td>
+                  <button class='btn btn-success mr-2 btn-sm' (click)="updateVehicle(vehicle)">Edit</button>
+                  <button class='btn btn-danger mr-2 btn-sm' (click)="deleteVehicle(vehicle)">Delete</button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  <!-- <button class='btn btn-info mr-2 btn-sm' (click)="updateDepartement(departement)">Add new Departement</button> -->
+  <button type="button" class="btn btn-info btn-sm" (click)="newVehicle()">Create</button>
+</div>
+
+<div *ngIf="addUpdate" class="col-md-7">
+  <form (ngSubmit)="processForm()">
+    <!-- type -->
+    <div class="form-group">
+        <input type="text" name="type" placeholder="type" class='form-control'
+            [(ngModel)]="vehicleObj.type" />
+    </div>
+
+    <!-- registrationNumber -->
+    <div class="form-group">
+      <input type="text" name="registrationNumber" placeholder="registrationNumber" class='form-control'
+          [(ngModel)]="vehicleObj.registrationNumber" />
+    </div>
+    <!-- company -->
+    <div class="form-group">
+      <select name="company" id="company" class="form-control" [(ngModel)]="vehicleObj.company">
+          <option *ngFor="let companie of companies" [ngValue]="companie">{{ companie.name }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class='btn-sm btn btn-primary' value="Save" />
+    </div>
+
+  </form>
+</div>
