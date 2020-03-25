@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Role } from 'src/app/models/roles/role';
 import { Router } from '@angular/router';
 import { RoleService } from 'src/app/services/roles/role.service';
 import { error } from 'util';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-roles',
@@ -11,69 +12,58 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./roles.component.scss']
 })
 export class RolesComponent implements OnInit {
-  public listRole:boolean=true;
-  public addUpdate:boolean=false;
+  // modal
+  modalRef: BsModalRef;
+  // variables
   public role: Role;
   private roles:Role[];
   constructor(private _roleService:RoleService,private _router:Router,
-    private _authService:AuthenticationService) { }
+    private _authService:AuthenticationService,
+    private modalService: BsModalService) { }
 
   ngOnInit() {
-    if(this.isAdmin()){
-      this.OnGetAllRoles();
-    }else{
-      this._router.navigateByUrl('/');
-    }
+    this.OnGetAllRoles();
   }
 
   //get all roles
   OnGetAllRoles(){
     this._roleService.getRoles().subscribe((role)=>{
-      console.log("heyy");
       this.roles=role;
-      console.log(this.roles);
-      console.log(this._authService.getToken());
     },(error)=>{
       console.log(error);
     });
   }
 
   //update description of role
-  update(role) {
+  updateRole(role,template: TemplateRef<any>) {
      this.role=role;
-     this.listRole=false;
-     this.addUpdate=true;
+     this.modalRef = this.modalService.show(template);
    }
 
    // update 
-   updateDescription(role){
-     console.log(role);
+   processForms(){
+     console.log(this.role);
     this._roleService.updateRole(this.role).subscribe((role) => {
       console.log(role);
+      this.ngOnInit();
     }, (error) => {
-      console.log("ha narrri " + error);
+      console.log(error);
     });
-    console.log(role);
     this.ngOnInit();
-    this.listRole=true;
-    this.addUpdate=false;
+    this.modalRef.hide();
    }
 
-  //return true if exist role 
+  //  Auth
   isAutheticated(){
     return this._authService.isAutheticated();
   }
-
-  //verify admin or not
   isAdmin(){
     return this._authService.role=="ADMIN";
     
   }
-
   isUser(){
     return this._authService.role=="USER";
   }
-
   userName(){
     console.log(this._authService.username);
     return this._authService.username;

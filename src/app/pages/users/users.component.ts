@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { User } from 'src/app/models/users/user';
 import { UserService } from 'src/app/services/users/user.service';
 import { Router } from '@angular/router';
@@ -7,6 +7,8 @@ import { RoleService } from 'src/app/services/roles/role.service';
 import { DepartementService } from 'src/app/services/departements/departement.service';
 import { Role } from 'src/app/models/roles/role';
 import { Departement } from 'src/app/models/departements/departement';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { template } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-users',
@@ -15,8 +17,9 @@ import { Departement } from 'src/app/models/departements/departement';
 })
 export class UsersComponent implements OnInit {
 
-  public listUser: boolean = true;
-  public addUpdate: boolean = false;
+  // modal
+  modalRef: BsModalRef;
+  public operation:string="";
   public users: User[];
   public userObj: User=new User();
   // role
@@ -28,11 +31,17 @@ export class UsersComponent implements OnInit {
   constructor(private _router: Router, private _authService: AuthenticationService,
     private _userService: UserService,
     private _roleService: RoleService,
-    private _departementService: DepartementService) { }
+    private _departementService: DepartementService,
+    private modalService: BsModalService) { }
 
   //get all departement
   ngOnInit() {
     this.OnGetAllUsers();
+  }
+
+  // close function 
+  closeForm(){
+    this.modalRef.hide();
   }
 
 
@@ -74,20 +83,20 @@ export class UsersComponent implements OnInit {
   }
 
   //update
-  updateDepartement(user) {
+  updateDepartement(user,template: TemplateRef<any>) {
     // localStorage.setItem("update",departement)
     // this._depService.setter(departement);
     this.userObj = user;
-    this.listUser = false;
-    this.addUpdate = true;
     this.onGetRole();
-    this.onGetDepartement();  
+    this.onGetDepartement();
+    this.operation="Edit User";
+    this.modalRef = this.modalService.show(template);  
   }
-  newUser() {
-    this.listUser = false;
-    this.addUpdate = true;
+  newUser(template: TemplateRef<any>) {
     this.onGetRole();
-    this.onGetDepartement();  
+    this.onGetDepartement();
+    this.operation="Add new User";
+    this.modalRef = this.modalService.show(template);  
   }
 
 
@@ -140,8 +149,7 @@ export class UsersComponent implements OnInit {
       
     }
     
-    this.listUser = true;
-    this.addUpdate = false;
+    this.closeForm();
     this.ngOnInit();
   }
 

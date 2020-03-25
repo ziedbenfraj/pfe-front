@@ -18,7 +18,7 @@ export class RoleService {
   constructor(private _http:Http,private _authService:AuthenticationService) { }
   private baseUrl:string="http://localhost:8080/role";
   // private headers=new Headers({'content-type':'application/json'});
-  private header=new Headers({"Authorization":'Bearer '+this._authService.jwt})
+  private header=new Headers({"Authorization":'Bearer '+this._authService.jwt,"Content-Type": "application/json"})
   private options=new RequestOptions({headers:this.header});
 
   private role=new Role;

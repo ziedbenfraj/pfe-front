@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { DepartementService } from 'src/app/services/departements/departement.service';
 import { Router } from '@angular/router';
 import { Departement } from 'src/app/models/departements/departement';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { template } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-departement',
@@ -12,19 +13,26 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
   styleUrls: ['./departement.component.scss']
 })
 export class DepartementComponent implements OnInit {
-  public listUser:boolean=true;
-  public addUpdate:boolean=false;
+  // modal
+  modalRef: BsModalRef;
+  public operation:string="";
+  // variables
   public departements: Departement[];
   public departement: Departement;
   // constructor
   constructor(private _depService: DepartementService, private _router: Router,
-    private _authService: AuthenticationService) { }
+    private _authService: AuthenticationService,
+    private modalService: BsModalService) { }
 
 
 
   //get all departement
   ngOnInit() {
     this.OnGetAllDepartements()
+  }
+
+  closeForm(){
+    this.modalRef.hide();
   }
 
   //get all departements
@@ -46,44 +54,36 @@ export class DepartementComponent implements OnInit {
   }
 
   //update
-  updateDepartement(departement) {
+  updateDepartement(departement,template: TemplateRef<any>) {
    // localStorage.setItem("update",departement)
     // this._depService.setter(departement);
     this.departement=departement;
-    this.listUser=false;
-    this.addUpdate=true;
+    this.operation="Edit Departement";
+    this.modalRef = this.modalService.show(template);
   }
-  newDepartement() {
+  newDepartement(template: TemplateRef<any>) {
     this.departement=new Departement;
-    this.listUser=false;
-    this.addUpdate=true;
+    this.operation="Add new Departement";
+    this.modalRef = this.modalService.show(template);
   }
 
 
-
-  //return true if exist role 
+  //Auth
   isAutheticated() {
     return this._authService.isAutheticated();
   }
-
-  //verify admin or not
   isAdmin() {
     return this._authService.role == "ADMIN";
-
   }
-
   isUser() {
     return this._authService.role == "USER";
   }
-
   userName() {
     return this._authService.username;
   }
 
-
-
-
-
+  // verifiy if exist an id 
+  // id!=null ? editFunction : addFunction 
   processForm(departement) {
     if (this.departement.id == undefined) {
       console.log('indice 111111 !');
@@ -103,8 +103,7 @@ export class DepartementComponent implements OnInit {
         console.log(error);
       });
     }
-    this.listUser=true;
-    this.addUpdate=false;
+    this.closeForm();
   }
 
 

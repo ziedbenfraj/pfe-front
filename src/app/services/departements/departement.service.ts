@@ -65,12 +65,6 @@ export class DepartementService {
       .catch(this.errorHandler);
   }
 
-  setter(departement: Departement) {
-    this.departement = departement;
-  }
-  getter() {
-    return this.departement;
-  }
 
 
 

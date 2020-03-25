@@ -1,4 +1,4 @@
-<div *ngIf="listUser">
+<div >
     <table class="table  table-hover table-bordered col-md-6">
         <thead class="bg-dark text-white">
             <th>Id</th>
@@ -14,44 +14,57 @@
                 <td>{{departement.description}}</td>
 
                 <td>
-                    <button class='btn btn-success mr-2 btn-sm' (click)="updateDepartement(departement)">Edit</button>
+                    <button class='btn btn-success mr-2 btn-sm' (click)="updateDepartement(departement,template)">Edit</button>
                     <button class='btn btn-danger mr-2 btn-sm' (click)="deleteDepartement(departement)">Delete</button>
                 </td>
             </tr>
         </tbody>
     </table>
     <!-- <button class='btn btn-info mr-2 btn-sm' (click)="updateDepartement(departement)">Add new Departement</button> -->
-    <button type="button" class="btn btn-info btn-sm" (click)="newDepartement()">Create</button>
+    <button type="button" class="btn btn-info btn-sm" (click)="newDepartement(template)">Create</button>
 </div>
+<!-- <button type="button" class="btn btn-primary" (click)="newDepartement(template)">Create template modal</button> -->
 
-<div *ngIf="addUpdate" class="col-md-7">
-    <form (ngSubmit)="processForm(departement)">
-
-        <div class="form-group">
-            <input type="text" name="name" placeholder="name" class='form-control' [(ngModel)]="departement.name"
-                #name="ngModel" minlength="4" required />
-        </div>
-        <!-- validation -->
-        <div *ngIf="name.invalid && (name.dirty || name.Untouched)" class="alert alert-danger">
-
-            <div *ngIf="name.errors.required">
-                Name is required.
+<!-- modal -->
+<ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{operation}}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form (ngSubmit)="processForm(departement)">
+            <div class="form-group">
+                <input type="text" name="name" placeholder="name" class='form-control' [(ngModel)]="departement.name"
+                    #name="ngModel" minlength="4" required />
             </div>
-            <div *ngIf="name.errors.minlength">
-                Name must be at least 4 characters
+            <!-- validation -->
+            <div *ngIf="name.invalid && (name.dirty || name.Untouched)" class="alert alert-danger">
+    
+                <div *ngIf="name.errors.required">
+                    Name is required.
+                </div>
+                <div *ngIf="name.errors.minlength">
+                    Name must be at least 4 characters
+                </div>
             </div>
-        </div>
-        <!-- validation end here -->
+            <!-- validation end here -->
+    
+            <div class="form-group">
+                <input type="text" name="description" placeholder="Description" class='form-control'
+                    [(ngModel)]="departement.description" />
+            </div>
+    
+    
+            <div class="form-group">
+                <button type="submit" class='btn-sm btn btn-primary'  >Save</button>
+                <button   class='ml-2 btn-sm btn btn-danger' (click)="modalRef.hide()">close</button>
+            </div>
+    
+        </form>
+    </div>
+  </ng-template>
 
-        <div class="form-group">
-            <input type="text" name="description" placeholder="Description" class='form-control'
-                [(ngModel)]="departement.description" />
-        </div>
+  <!-- modal end -->
 
-
-        <div class="form-group">
-            <input type="submit" [disabled]="name.invalid" class='btn-sm btn btn-primary' value="Save" />
-        </div>
-
-    </form>
-</div>

@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { ModalModule } from 'ngx-bootstrap/modal';
 
 import {FormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -29,6 +28,9 @@ import { CompaniesComponent } from './pages/companies/companies.component';
 import { VehiclesComponent } from './pages/vehicles/vehicles.component';
 import { TyresComponent } from './pages/tyres/tyres.component';
 import { SensorsComponent } from './pages/sensors/sensors.component';
+
+// modal
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 @NgModule({
