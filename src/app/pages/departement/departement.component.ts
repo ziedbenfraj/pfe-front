@@ -55,8 +55,6 @@ export class DepartementComponent implements OnInit {
 
   //update
   updateDepartement(departement,template: TemplateRef<any>) {
-   // localStorage.setItem("update",departement)
-    // this._depService.setter(departement);
     this.departement=departement;
     this.operation="Edit Departement";
     this.modalRef = this.modalService.show(template);
@@ -105,6 +103,21 @@ export class DepartementComponent implements OnInit {
     }
     this.closeForm();
   }
+
+  // confrim Delete MODAL
+  openModal(confirmDelete: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(confirmDelete, {class: 'modal-sm'});
+  }
+  confirm(departement) {
+    this.departement=departement;
+    this.deleteDepartement(departement);
+    this.modalRef.hide();
+  }
+ 
+  decline(): void {
+    this.modalRef.hide();
+  }
+  // end here
 
 
 
