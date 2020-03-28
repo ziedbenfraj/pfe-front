@@ -3,6 +3,11 @@ import { Tyre } from 'src/app/models/tyre/tyre';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { TyreService } from 'src/app/services/tyre/tyre.service';
+import { SensorsService } from 'src/app/services/sensors/sensors.service';
+import { Sensors } from 'src/app/models/sensors/sensors';
+import { Vehicles } from 'src/app/models/vehicles/vehicles';
+import { VehiclesService } from 'src/app/services/vehicles/vehicles.service';
+import { Mounting } from 'src/app/models/mounting/mounting';
 
 @Component({
   selector: 'app-tyres',
@@ -16,13 +21,41 @@ export class TyresComponent implements OnInit {
   public tyres: Tyre[];
   public tyreObj: Tyre = new Tyre();
 
+  public sensors=new Array();
+  public vehicles:Vehicles[];
+
+  public yyy:Mounting=new Mounting();
+  public zied:Vehicles=new Vehicles();
+
+
   constructor(private _router: Router, private _authService: AuthenticationService,
-    private _tyreService: TyreService) { }
+    private _tyreService: TyreService,private _sensorService: SensorsService,
+    private _vehicleService:VehiclesService) { }
 
   ngOnInit() {
     this.OnGetAllTyres();
   }
 
+  //get vehicle
+  onGetVehicle(){
+    this._vehicleService.getVehicles().subscribe((vehicle)=>{
+      this.vehicles=vehicle;
+    },(error)=>{
+      console.log(error);
+    })
+  }
+
+   // get sensor
+   onGetSensor() {
+    this._sensorService.getSensors().subscribe((sensor) => {
+      sensor.forEach(item => {
+        if(item.tyre==null) this.sensors.push(item);
+      });
+      
+    }, (error) => {
+      console.log(error);
+    });
+  };
 
   //get all sensors
   OnGetAllTyres() {
@@ -46,11 +79,17 @@ export class TyresComponent implements OnInit {
   updateTyre(tyre) {
     // localStorage.setItem("update",departement)
     // this._depService.setter(departement);
+    this.onGetSensor();
+    this.onGetVehicle();
     this.tyreObj = tyre;
-    this.listUser = false;
-    this.addUpdate = true;
+    this.zied=this.tyreObj.mounting.vehicle;
+    console.log(this.zied);
+    // this.listUser = false;
+    // this.addUpdate = true;
   }
   newTyre() {
+    this.onGetSensor();
+    this.onGetVehicle();
     this.listUser = false;
     this.addUpdate = true;
   }
@@ -82,9 +121,9 @@ export class TyresComponent implements OnInit {
 
   processForm() {
     //user.activated=true;
+    this.yyy.vehicle=this.zied;
+    this.tyreObj.mounting=this.yyy;
     if (this.tyreObj.id == undefined) {
-      console.log("create  eyy");
-      console.log(this.tyreObj);
       this._tyreService.createTyre(this.tyreObj).subscribe((sensor) => {
         console.log(sensor);
         this.ngOnInit();
@@ -99,13 +138,11 @@ export class TyresComponent implements OnInit {
       }, (error) => {
         console.log(error);
       });
-
-
     }
-
+    this.ngOnInit();
     this.listUser = true;
     this.addUpdate = false;
-    this.ngOnInit();
+    
   }
 
 }

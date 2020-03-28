@@ -17,7 +17,6 @@ export class SensorsComponent implements OnInit {
   public addUpdate: boolean = false;
   public sensors: Sensors[];
   public sensorObj: Sensors = new Sensors();
-  public tyres: Tyre[];
 
   constructor(private _router: Router, private _authService: AuthenticationService,
     private _SensorService: SensorsService,private _tyreService:TyreService) { }
@@ -36,14 +35,7 @@ export class SensorsComponent implements OnInit {
     });
   };
 
-  // get Role
-  onGetTyre() {
-    this._tyreService.getTyres().subscribe((tyre) => {
-      this.tyres = tyre;
-    }, (error) => {
-      console.log(error);
-    });
-  };
+ 
 
   //delete
   deleteSensor(sensor: Sensors) {
@@ -58,13 +50,12 @@ export class SensorsComponent implements OnInit {
   updateSensor(sensor) {
     // localStorage.setItem("update",departement)
     // this._depService.setter(departement);
-    this.onGetTyre();
     this.sensorObj = sensor;
     this.listUser = false;
     this.addUpdate = true;
   }
   newSensor() {
-    this.onGetTyre();
+    this.sensorObj=null;
     this.listUser = false;
     this.addUpdate = true;
   }
@@ -116,10 +107,10 @@ export class SensorsComponent implements OnInit {
 
 
     }
-
+    this.ngOnInit();
     this.listUser = true;
     this.addUpdate = false;
-    this.ngOnInit();
+    
   }
 
 }

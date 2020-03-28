@@ -6,6 +6,8 @@
           <th>name</th>
           <th>serialNumber</th>
           <th>description</th>
+          <th>tyre Serial</th>
+          <th>tyre Serial</th>
           <th>enable</th>
 
           <th>operations</th>
@@ -16,7 +18,9 @@
               <td>{{sensor.name}}</td>
               <td>{{sensor.serialNumber}}</td>
               <td>{{sensor.description}}</td>
+              <td style="font-weight: bold;">{{sensor.tyre!=null ? sensor.tyre.serialNumber : "UNSELECTED"}}</td>
               <td>{{sensor.enable}}</td>
+
 
 
               <td>
@@ -50,7 +54,7 @@
         [(ngModel)]="sensorObj.description" />
 </div>
 
-<!-- type -->
+<!-- enable -->
 <div class="form-group">
   <select name="enable" placeholder="enable" class='form-control'
   [(ngModel)]="sensorObj.enable">
@@ -59,12 +63,12 @@
   </select>
 </div>
 
-<!-- tyres -->
+<!-- tyres
 <div class="form-group">
   <select name="tyre" id="tyre" class="form-control" [(ngModel)]="sensorObj.tyre">
       <option *ngFor="let items of tyres" [ngValue]="items">{{ items.sensor ==null ? items.serialNumber : disabled }}</option>
   </select>
-</div>
+</div> -->
 
     
 
