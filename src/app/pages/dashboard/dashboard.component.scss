@@ -1,0 +1,14 @@
+.borderLeft{
+    border-left:5px solid #98a4c7 !important;
+}
+.see-more a{
+    font-size: 12px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #98a4c7;
+    opacity: .7;
+    transition: all ease-in-out .5s linear;
+}
+.see-more a:hover{
+    opacity: 1;
+    text-decoration: none;
+}

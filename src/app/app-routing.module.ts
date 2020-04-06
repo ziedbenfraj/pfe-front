@@ -10,6 +10,7 @@ import { TyresComponent } from './pages/tyres/tyres.component';
 import { SensorsComponent } from './pages/sensors/sensors.component';
 
 const routes: Routes = [
+  {path: '', component: DashboardComponent},
   // dashboard path
   {path: 'dashboard', component: DashboardComponent},
   // roles path

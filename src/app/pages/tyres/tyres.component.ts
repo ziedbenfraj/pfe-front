@@ -81,11 +81,16 @@ export class TyresComponent implements OnInit {
     // this._depService.setter(departement);
     this.onGetSensor();
     this.onGetVehicle();
+    
+    console.log(tyre);
     this.tyreObj = tyre;
-    this.zied=this.tyreObj.mounting.vehicle;
-    console.log(this.zied);
-    // this.listUser = false;
-    // this.addUpdate = true;
+
+    this.yyy=this.tyreObj.mounting;
+    this.zied=this.yyy.vehicle;
+
+    console.log(this.tyreObj);
+    this.listUser = false;
+    this.addUpdate = true;
   }
   newTyre() {
     this.onGetSensor();
@@ -123,6 +128,9 @@ export class TyresComponent implements OnInit {
     //user.activated=true;
     this.yyy.vehicle=this.zied;
     this.tyreObj.mounting=this.yyy;
+    
+    console.log(this.tyreObj);
+    
     if (this.tyreObj.id == undefined) {
       this._tyreService.createTyre(this.tyreObj).subscribe((sensor) => {
         console.log(sensor);
@@ -132,9 +140,9 @@ export class TyresComponent implements OnInit {
 
       });
     } else {
-      this._tyreService.updateTyre(this.tyreObj).subscribe((sensor) => {
-        console.log(sensor);
-        this.ngOnInit();
+      console.log(this.tyreObj);
+      this._tyreService.updateTyre(this.tyreObj).subscribe((tyre) => {
+        console.log("here 1");
       }, (error) => {
         console.log(error);
       });

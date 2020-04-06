@@ -39,10 +39,7 @@ export class AuthenticationService {
     //save username
     if(objJWT!=null){
       this.username=objJWT.sub;
-    this.role=objJWT.roles;
-    console.log(this.username);
-    console.log(this.role);
-    console.log(this.isAdmin());
+      this.role=objJWT.roles;
     }else {
       console.log("ty a3mel login 9bal !!");
     }
@@ -57,7 +54,6 @@ export class AuthenticationService {
     return this.role=="USER";
   }
   isAutheticated(){
-    console.log(this.username,this.role);
     return (this.role!=undefined && (this.isAdmin() || this.isUser() ));
     
   }

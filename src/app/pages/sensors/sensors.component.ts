@@ -55,7 +55,6 @@ export class SensorsComponent implements OnInit {
     this.addUpdate = true;
   }
   newSensor() {
-    this.sensorObj=null;
     this.listUser = false;
     this.addUpdate = true;
   }
