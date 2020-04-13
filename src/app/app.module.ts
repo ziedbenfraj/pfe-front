@@ -31,6 +31,7 @@ import { SensorsComponent } from './pages/sensors/sensors.component';
 
 // modal
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { MeasuresComponent } from './pages/measures/measures.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     VehiclesComponent,
     TyresComponent,
     SensorsComponent,
+    MeasuresComponent,
     
   ],
   imports: [

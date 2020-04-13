@@ -1,0 +1,102 @@
+<div class="row">
+  <!-- All Measures -->
+  <div class="col-12 col-xl-12 mb-4 align-items-stretch">
+    <div class="card h-100 border-0 rounded-0">
+      <div class="card-title mb-1 p-3 d-flex">
+        <h6>Measures</h6>
+        <a class="btn ml-auto p-0 text-lightning"> <i class="fas fa-ellipsis-h"></i> </a>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive-md">
+          <button type="button" class="btn btn-info btn-sm mb-2" (click)="newMeasures(template)">
+            <i class="fas fa-plus-square"></i> Create
+          </button>
+          <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+              <thead class="bg-dark text-white">
+                <tr>
+                  <th >pressure</th>
+                  <th >temperature</th>
+                  <th >sensor Name</th>
+                  <th >dateOfMeasure</th>
+                  <th>Controls</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white text-dark">
+                <tr *ngFor="let measure of measuresList">
+                  <td>{{measure.pressure}}</td>
+                  <td>{{measure.temperature}}</td>
+                  <td>{{measure.sensor.name}}</td>
+                  <td class="text-info">{{measure.dateOfMeasure}}</td>
+                  <td>
+                    <button class='btn btn-success mr-2 btn-sm' (click)="updateMeasures(measure,template)">
+                      <i class="fas fa-edit"></i> Edit 
+                    </button>
+                    <!-- <button class='btn btn-danger mr-2 btn-sm' (click)="deleteDepartement(departement)">Delete</button> -->
+                    <button class='btn btn-danger mr-2 btn-sm' (click)="openModal(confirmDelete)">
+                      <i class="fas fa-trash-alt"></i> Delete
+                    </button>
+                    <!-- confirmDelete modal -->
+                    <ng-template #confirmDelete>
+                        <div class="modal-body text-center">
+                        <p>Do you want to confirm?</p>
+                        <button type="button" class="btn btn-success text-white mr-2" (click)="confirm(measure)" >
+                            <i class="fas fa-check"></i></button>
+                        <button type="button" class="btn btn-danger text-white" (click)="decline()" >
+                            <i class="fas fa-times"></i>
+                        </button>
+                        </div>
+                    </ng-template>
+                    <!-- end confirmDelete -->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- modal -->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{operation}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <form (ngSubmit)="processForm(measuresObj)">
+          <div class="form-group">
+              <input type="number" name="pressure" placeholder="pressure" class='form-control' [(ngModel)]="measuresObj.pressure" />
+          </div>
+  
+          <div class="form-group">
+              <input type="number" name="temperature" placeholder="temperature" class='form-control'
+                  [(ngModel)]="measuresObj.temperature" />
+          </div>
+
+          <!-- company -->
+          <div class="form-group">
+            <select name="sensor" id="sensor" class="form-control" [(ngModel)]="measuresObj.sensor">
+                <option *ngFor="let sensor of sensorList" [ngValue]="sensor">{{ sensor.name }}</option>
+            </select>
+          </div>
+  
+  
+          
+              <button type="submit" class='btn-sm btn btn-primary'  >Save</button>
+              
+          
+  
+      </form>
+      <button class=' btn-sm btn btn-danger fix-cancel' (click)="closeForm()">close</button>
+  </div>
+</ng-template>
+
+<!-- modal end -->

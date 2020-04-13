@@ -1,5 +1,8 @@
 <div >
-    <table class="table  table-hover table-bordered col-md-6">
+    <button type="button" class="btn btn-info btn-sm mb-2" (click)="newDepartement(template)">
+        <i class="fas fa-plus-square"></i> Create
+    </button>
+    <table class="table  table-hover table-bordered ">
         <thead class="bg-dark text-white">
             <th>Id</th>
             <th>Name</th>
@@ -14,9 +17,13 @@
                 <td>{{departement.description}}</td>
 
                 <td>
-                    <button class='btn btn-success mr-2 btn-sm' (click)="updateDepartement(departement,template)">Edit</button>
+                    <button class='btn btn-success mr-2 btn-sm' (click)="updateDepartement(departement,template)">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
                     <!-- <button class='btn btn-danger mr-2 btn-sm' (click)="deleteDepartement(departement)">Delete</button> -->
-                    <button class='btn btn-danger mr-2 btn-sm' (click)="openModal(confirmDelete)">Delete</button>
+                    <button class='btn btn-danger mr-2 btn-sm' (click)="openModal(confirmDelete)">
+                        <i class="fas fa-trash-alt"></i> Delete
+                    </button>
                     <!-- confirmDelete modal -->
                     <ng-template #confirmDelete>
                         <div class="modal-body text-center">
@@ -34,7 +41,7 @@
         </tbody>
     </table>
     <!-- <button class='btn btn-info mr-2 btn-sm' (click)="updateDepartement(departement)">Add new Departement</button> -->
-    <button type="button" class="btn btn-info btn-sm" (click)="newDepartement(template)">Create</button>
+    
 </div>
 <!-- <button type="button" class="btn btn-primary" (click)="newDepartement(template)">Create template modal</button> -->
 
@@ -70,13 +77,8 @@
                 <input type="text" name="description" placeholder="Description" class='form-control'
                     [(ngModel)]="departement.description" />
             </div>
-    
-    
             
-                <button type="submit" class='btn-sm btn btn-primary'  >Save</button>
-                
-            
-    
+            <button type="submit" class='btn-sm btn btn-primary'  >Save</button>
         </form>
         <button class=' btn-sm btn btn-danger fix-cancel' (click)="decline()">close</button>
     </div>

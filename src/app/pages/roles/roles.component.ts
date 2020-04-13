@@ -40,6 +40,11 @@ export class RolesComponent implements OnInit {
      this.modalRef = this.modalService.show(template);
    }
 
+   decline(): void {
+    this.modalRef.hide();
+    this.ngOnInit();
+  }
+
    // update 
    processForms(){
      console.log(this.role);

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Companies } from 'src/app/models/companies/companies';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CompaniesService } from 'src/app/services/companies/companies.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-companies',
@@ -11,19 +12,33 @@ import { CompaniesService } from 'src/app/services/companies/companies.service';
 })
 export class CompaniesComponent implements OnInit {
 
-  public listUser:boolean=true;
-  public addUpdate:boolean=false;
+  modalRef: BsModalRef;
+  
   public companies: Companies[];
   public companie: Companies;
   // constructor
   constructor(private _compService: CompaniesService, private _router: Router,
-    private _authService: AuthenticationService) { }
+    private _authService: AuthenticationService,private modalService: BsModalService) { }
 
 
 
   //get all departement
   ngOnInit() {
     this.OnGetAllCompanies();
+  }
+
+  // confrim Delete MODAL
+  openModal(confirmDelete: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(confirmDelete, {class: 'modal-sm'});
+  }
+  confirm(companie) {
+    this.deleteCompanie(companie);
+    this.modalRef.hide();
+  }
+ 
+  decline(): void {
+    this.modalRef.hide();
+    this.ngOnInit();
   }
 
   //get all departements
@@ -42,20 +57,19 @@ export class CompaniesComponent implements OnInit {
     }, (error) => {
       console.log(error);
     });
+    this.closeForm();
   }
 
   //update
-  updateCompanie(companie) {
+  updateCompanie(companie,template: TemplateRef<any>) {
    // localStorage.setItem("update",departement)
     // this._depService.setter(departement);
     this.companie=companie;
-    this.listUser=false;
-    this.addUpdate=true;
+    this.modalRef = this.modalService.show(template);
   }
-  newCompanie() {
+  newCompanie(template: TemplateRef<any>) {
     this.companie=new Companies;
-    this.listUser=false;
-    this.addUpdate=true;
+    this.modalRef = this.modalService.show(template);
   }
 
 
@@ -82,6 +96,10 @@ export class CompaniesComponent implements OnInit {
 
 
 
+  closeForm(){
+    this.modalRef.hide();
+  }
+
 
   processForm() {
     if (this.companie.id == undefined) {
@@ -102,8 +120,7 @@ export class CompaniesComponent implements OnInit {
         console.log(error);
       });
     }
-    this.listUser=true;
-    this.addUpdate=false;
+    this.closeForm();
   }
 
 }

@@ -116,6 +116,7 @@ export class DepartementComponent implements OnInit {
  
   decline(): void {
     this.modalRef.hide();
+    this.ngOnInit();
   }
   // end here
 

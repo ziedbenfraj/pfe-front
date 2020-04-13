@@ -32,27 +32,24 @@ export class DashboardComponent implements OnInit {
     this.myFunc();
     
   }
-  // modal
-  modalRef: BsModalRef;
-  public operation:string="";
-
-  public measure:Measures;
-  public measuresObj=new Measures();
+  
 
   
   // for chart
   public measureName=["sensor1", "sensor 2", "sensor 3", "sensor 4", "sensor 5", "sensor 6"];
-  public measureTemperature=[];
-  public measurePressure=[];
+  public measureTemperature=[30, 32.5, 11.333333333333334, 14.666666666666666, 11, 16.166666666666668];
+  public measurePressure=[9.5, 12.5, 11.666666666666666, 17, 9.666666666666666, 19.333333333333332];
 
   // number of sensors
   public numberSensors:number;
   public numberTyres:number;
   public numberVehicles:number;
   public numberMeasures:number;
+  
+  public measuresList:any;
 
   // Measures
-  public measuresList:any;
+  
   // Sensor
   public sensorList:any;
   // aux
@@ -67,64 +64,7 @@ export class DashboardComponent implements OnInit {
               private modalService: BsModalService) { }
   
   
-  // new measures
-  newMeasures(template: TemplateRef<any>) {
-    this.measure=new Measures;
-    this.operation="Add new Measure";
-    this.modalRef = this.modalService.show(template);
-  }
-  // update measures
-  updateMeasures(measuresObj,template: TemplateRef<any>) {
-    this.measuresObj=measuresObj;
-    this.operation="Edit measures";
-    this.modalRef = this.modalService.show(template);
-  }
-  processForm(measuresObj) {
-    if (this.measuresObj.id == undefined) {
-      console.log('indice 111111 !');
-      this._measureService.createMeasure(this.measuresObj).subscribe((measure) => {
-        console.log(measure);
-        this.ngOnInit();
-      }, (error) => {
-        console.log(error);
-
-      });
-    } else {
-      this._measureService.updateMeasure(this.measuresObj).subscribe((measure) => {
-        console.log(measure);
-        this.ngOnInit();
-      }, (error) => {
-        console.log(error);
-      });
-    }
-    this.closeForm();
-  }
-  // close form
-  closeForm(){
-    this.modalRef.hide();
-  }
-
-  // delete measures
-  // confrim Delete MODAL
-  openModal(confirmDelete: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(confirmDelete, {class: 'modal-sm'});
-  }
-  confirm(measuresObj) {
-    this.measuresObj=measuresObj;
-    this.deleteDepartement(measuresObj);
-    this.modalRef.hide();
-  }
- 
-  decline(): void {
-    this.modalRef.hide();
-  }
-  deleteDepartement(measuresObj: Measures) {
-    this._measureService.deleteMeasure(measuresObj.id).subscribe(() => {
-      this.measuresList.splice(this.measuresList.indexOf(measuresObj), 1);
-    }, (error) => {
-      console.log(error);
-    });
-  }
+  
 
   // nratb el temp wel pression
   myFunc(){

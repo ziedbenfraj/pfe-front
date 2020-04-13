@@ -21,7 +21,9 @@ export class UsersComponent implements OnInit {
   modalRef: BsModalRef;
   public operation:string="";
   public users: User[];
+  public user:User;
   public userObj: User=new User();
+  public displayPassword:boolean=true;
   // role
   public roles: Role[];
   // departement
@@ -86,6 +88,7 @@ export class UsersComponent implements OnInit {
   updateDepartement(user,template: TemplateRef<any>) {
     // localStorage.setItem("update",departement)
     // this._depService.setter(departement);
+    this.displayPassword=false;
     this.userObj = user;
     this.onGetRole();
     this.onGetDepartement();
@@ -93,6 +96,7 @@ export class UsersComponent implements OnInit {
     this.modalRef = this.modalService.show(template);  
   }
   newUser(template: TemplateRef<any>) {
+    this.displayPassword=true;
     this.onGetRole();
     this.onGetDepartement();
     this.operation="Add new User";
@@ -151,6 +155,20 @@ export class UsersComponent implements OnInit {
     
     this.closeForm();
     this.ngOnInit();
+  }
+
+  // confrim Delete MODAL
+  openModal(confirmDelete: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(confirmDelete, {class: 'modal-sm'});
+  }
+  confirm(user) {
+    this.user=user;
+    this.deleteUsers(user);
+    this.modalRef.hide();
+  }
+ 
+  decline(): void {
+    this.modalRef.hide();
   }
 
 }
