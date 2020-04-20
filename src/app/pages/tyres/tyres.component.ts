@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Tyre } from 'src/app/models/tyre/tyre';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -8,6 +8,8 @@ import { Sensors } from 'src/app/models/sensors/sensors';
 import { Vehicles } from 'src/app/models/vehicles/vehicles';
 import { VehiclesService } from 'src/app/services/vehicles/vehicles.service';
 import { Mounting } from 'src/app/models/mounting/mounting';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { MountingService } from 'src/app/services/mountings/mounting.service';
 
 @Component({
   selector: 'app-tyres',
@@ -27,10 +29,13 @@ export class TyresComponent implements OnInit {
   public yyy:Mounting=new Mounting();
   public zied:Vehicles=new Vehicles();
 
+  modalRef: BsModalRef;
+  public operation:string="";
+
 
   constructor(private _router: Router, private _authService: AuthenticationService,
-    private _tyreService: TyreService,private _sensorService: SensorsService,
-    private _vehicleService:VehiclesService) { }
+    private _tyreService: TyreService,private _sensorService: SensorsService,private modalService: BsModalService,
+    private _vehicleService:VehiclesService,private _mountingService:MountingService) { }
 
   ngOnInit() {
     this.OnGetAllTyres();
@@ -61,6 +66,7 @@ export class TyresComponent implements OnInit {
   OnGetAllTyres() {
     this._tyreService.getTyres().subscribe((tyre) => {
       this.tyres = tyre;
+      console.log(this.tyres);
     }, (error) => {
       console.log(error);
     });
@@ -69,6 +75,7 @@ export class TyresComponent implements OnInit {
   //delete
   deleteTyre(tyre: Tyre) {
     this._tyreService.deleteTyre(tyre.id).subscribe(() => {
+      this._mountingService.deleteMounting(tyre.mounting.id);
       this.tyres.splice(this.tyres.indexOf(tyre), 1);
     }, (error) => {
       console.log(error);
@@ -76,27 +83,38 @@ export class TyresComponent implements OnInit {
   }
 
   //update
-  updateTyre(tyre) {
-    // localStorage.setItem("update",departement)
-    // this._depService.setter(departement);
+  updateTyre(tyre,template: TemplateRef<any>) {
+    this.operation="Edit";
     this.onGetSensor();
     this.onGetVehicle();
-    
-    console.log(tyre);
     this.tyreObj = tyre;
 
     this.yyy=this.tyreObj.mounting;
     this.zied=this.yyy.vehicle;
 
-    console.log(this.tyreObj);
-    this.listUser = false;
-    this.addUpdate = true;
+    this.modalRef = this.modalService.show(template);
   }
-  newTyre() {
+  newTyre(template: TemplateRef<any>) {
+    this.operation="Add";
+    
+    console.log(this.zied);
     this.onGetSensor();
     this.onGetVehicle();
-    this.listUser = false;
-    this.addUpdate = true;
+    this.modalRef = this.modalService.show(template);
+  }
+
+  //delete
+  openModal(confirmDelete: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(confirmDelete, {class: 'modal-sm'});
+  }
+  confirm(tyre) {
+    this.deleteTyre(tyre);
+    this.modalRef.hide();
+  }
+ 
+  decline(): void {
+    this.modalRef.hide();
+    this.ngOnInit();
   }
 
 
@@ -123,33 +141,31 @@ export class TyresComponent implements OnInit {
 
 
 
+  closeForm(){
+    this.modalRef.hide();
+  }
 
   processForm() {
-    //user.activated=true;
-    this.yyy.vehicle=this.zied;
-    this.tyreObj.mounting=this.yyy;
-    
-    console.log(this.tyreObj);
-    
-    if (this.tyreObj.id == undefined) {
-      this._tyreService.createTyre(this.tyreObj).subscribe((sensor) => {
-        console.log(sensor);
-        this.ngOnInit();
-      }, (error) => {
-        console.log(error);
+    console.log(this.zied);
+    // this.yyy.vehicle=this.zied;
+    // // this.yyy.tyre=tyreObj;
+    // this.tyreObj.mounting=this.yyy;
+    // if (this.tyreObj.id == undefined) {
+    //   this._tyreService.createTyre(this.tyreObj).subscribe((sensor) => {
+    //     this.ngOnInit();
+    //   }, (error) => {
+    //     console.log(error);
 
-      });
-    } else {
-      console.log(this.tyreObj);
-      this._tyreService.updateTyre(this.tyreObj).subscribe((tyre) => {
-        console.log("here 1");
-      }, (error) => {
-        console.log(error);
-      });
-    }
-    this.ngOnInit();
-    this.listUser = true;
-    this.addUpdate = false;
+    //   });
+    // } else {
+    //   console.log(this.tyreObj);
+    //   this._tyreService.updateTyre(this.tyreObj).subscribe((tyre) => {
+    //     this.ngOnInit();
+    //   }, (error) => {
+    //     console.log(error);
+    //   });
+    // }
+    this.closeForm();
     
   }
 

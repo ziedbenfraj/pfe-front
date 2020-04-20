@@ -23,7 +23,7 @@
                 </tr>
               </thead>
               <tbody class="bg-white text-dark">
-                <tr *ngFor="let measure of measuresList">
+                <tr *ngFor="let measure of measuresList | paginate: { itemsPerPage: 5, currentPage: p }">
                   <td>{{measure.pressure}}</td>
                   <td>{{measure.temperature}}</td>
                   <td>{{measure.sensor.name}}</td>
@@ -54,6 +54,7 @@
             </table>
             
           </div>
+          <pagination-controls class="text-center" (pageChange)="p = $event"></pagination-controls>
         </div>
       </div>
 

@@ -1,6 +1,8 @@
 <!-- Table of Roles -->
 <div >
-  <button type="button" class="btn btn-info btn-sm mb-2" (click)="newCompanie(template)">Create</button>
+  <button type="button" class="btn btn-info btn-sm mb-2" (click)="newCompanie(template)">
+    <i class="fas fa-plus-square"></i> New
+  </button>
   <table class="table  table-hover table-bordered col-md-12">
       <thead class="bg-dark text-white">
           <th>Id</th>
@@ -24,7 +26,9 @@
               <td>{{companie.country}}</td>
 
               <td>
-                  <button class='btn btn-success mr-2 btn-sm' (click)="updateCompanie(companie,template)">Edit</button>
+                  <button class='btn btn-success mr-2 btn-sm' (click)="updateCompanie(companie,template)">
+                    <i class="fas fa-edit"></i> Edit
+                  </button>
                   <button class='btn btn-danger mr-2 btn-sm' (click)="openModal(confirmDelete)">
                     <i class="fas fa-trash-alt"></i> Delete
                 </button>
@@ -40,64 +44,120 @@
                     </div>
                 </ng-template>
                 <!-- end confirmDelete -->
+                <button class="btn btn-info btn-sm" (click)="details(companie,companyDetail)">
+                  <i class="fas fa-car"></i> vehicles
+              </button>
               </td>
           </tr>
       </tbody>
-  </table>
-  <!-- <button class='btn btn-info mr-2 btn-sm' (click)="updateDepartement(departement)">Add new Departement</button> -->
-  
+  </table>  
 </div>
 
 
 <!-- modal -->
 <ng-template #template>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">{{operation}}</h4>
+    <h4 class="modal-title pull-left">{{operation}} Company</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <form (ngSubmit)="processForm(companie)">
+    <form (ngSubmit)="processForm(companie)" #companieForm="ngForm">
 
       <!-- name -->
       <div class="form-group">
-          <input type="text" name="name" placeholder="name" class='form-control' [(ngModel)]="companie.name"
-               />
+        <label for="name" class="col-form-label col-form-label-sm customLabel">
+          Name :
+        </label>
+          <input type="text" id="name" name="name" placeholder="name" class='form-control' [(ngModel)]="companie.name"
+          required #name="ngModel" minlength="2"/>
+      </div>
+      <div *ngIf="name.invalid && (name.dirty || name.Untouched)" class="alert alert-danger">
+        2 character at least
       </div>
       <!-- code -->
       <div class="form-group">
-        <input type="text" name="code" placeholder="code" class='form-control' [(ngModel)]="companie.code"
-            />
+        <label for="code" class="col-form-label col-form-label-sm customLabel">
+          code :
+        </label>
+        <input type="text" id="code" name="code" placeholder="code" class='form-control' [(ngModel)]="companie.code"
+        required #code="ngModel" minlength="2" />
+      </div>
+      <div *ngIf="code.invalid && (code.dirty || code.Untouched)" class="alert alert-danger">
+        2 character at least
       </div>
       <!-- adresse -->
       <div class="form-group">
-        <input type="text" name="adresse" placeholder="adresse" class='form-control' [(ngModel)]="companie.adresse"
-             />
+        <label for="adresse" class="col-form-label col-form-label-sm customLabel">
+          adresse :
+        </label>
+        <input type="text" id="adresse" name="adresse" placeholder="adresse" class='form-control' [(ngModel)]="companie.adresse"
+        required #adresse="ngModel" minlength="4"  />
       </div>
       <!-- email -->
       <div class="form-group">
-        <input type="email" name="email" placeholder="email" class='form-control' [(ngModel)]="companie.email"
-            />
+        <label for="email" class="col-form-label col-form-label-sm customLabel">
+          email :
+        </label>
+        <input type="email" id="email" name="email" placeholder="email" class='form-control' [(ngModel)]="companie.email"
+        required #email="ngModel" minlength="4" email />
+      </div>
+      <div *ngIf="email.invalid && (email.dirty || email.Untouched)" class="alert alert-danger">
+        type a valid email 
       </div>
       <!-- phoneNumber -->
       <div class="form-group">
-        <input type="text" name="phoneNumber" placeholder="phoneNumber" class='form-control' [(ngModel)]="companie.phoneNumber"
-             />
+        <label for="phoneNumber" class="col-form-label col-form-label-sm customLabel">
+          phone Number :
+        </label>
+        <input type="text" id="phoneNumber" name="phoneNumber" placeholder="phoneNumber" class='form-control' [(ngModel)]="companie.phoneNumber"
+        required minlength="4"/>
       </div>
       <!-- country -->
+      <label for="country" class="col-form-label col-form-label-sm customLabel">
+        country :
+      </label>
       <div class="form-group">
-        <input type="text" name="country" placeholder="country" class='form-control' [(ngModel)]="companie.country"
-             />
+        <input type="text" id="country" name="country" placeholder="country" class='form-control' [(ngModel)]="companie.country"
+        required minlength="2" />
       </div>
   
       <div class="form-group">
-          <input type="submit" class='btn-sm btn btn-primary' value="Save" />
+          <input type="submit" class='btn-sm btn btn-primary' value="Save" [disabled]="companieForm.form.invalid" />
       </div>
   
     </form>
-    <button class=' btn-sm btn btn-danger fix-cancel' (click)="decline()">close</button>
+    <button class=' btn-sm btn btn-danger fix-cancel' (click)="decline()" >close</button>
   </div>
 </ng-template>
 
 <!-- modal end -->
+
+
+<!-- list of vehicles -->
+<ng-template #companyDetail>
+  <div class="modal-header text-center">
+      <p class="modal-title text-info"><i class="fas fa-car"></i> List of vehicles in {{companyName}} : {{vehicles.length}}</p>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body ">
+      <ul class="list-group mb-3 list-group-item d-flex" *ngFor="let vehicle of vehicles">
+            <div >
+              <small class="text-muted">id:  </small>
+              <span>{{vehicle.id}}</span>
+            </div>
+            <div>
+              <small class="text-muted">type:  </small>
+              <span>{{vehicle.type}}</span>
+            </div>
+            <div>
+              <small class="text-muted">registrationNumber:  </small>
+              <span>{{vehicle.registrationNumber}}</span>
+            </div>
+        </ul>
+  </div>
+</ng-template>
+<!-- end lidt of vehicles -->

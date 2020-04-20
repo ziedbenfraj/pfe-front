@@ -1,3 +1,5 @@
+import { Vehicles } from '../vehicles/vehicles';
+
 export class Companies {
     id?:number;
     name?:String;
@@ -6,4 +8,5 @@ export class Companies {
     email?:String;
     phoneNumber?:String;
     country?:String;
+    vehicles?:Vehicles[];
 }

@@ -18,6 +18,9 @@ export class MeasuresComponent implements OnInit {
   public measuresObj=new Measures();
   public measuresList:any;
 
+  // pagination
+  public p: number = 1;
+
   // Sensor
   public sensorList:any;
 

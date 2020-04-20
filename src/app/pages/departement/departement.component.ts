@@ -13,6 +13,8 @@ import { template } from '@angular/core/src/render3';
   styleUrls: ['./departement.component.scss']
 })
 export class DepartementComponent implements OnInit {
+  // 
+
   // modal
   modalRef: BsModalRef;
   public operation:string="";

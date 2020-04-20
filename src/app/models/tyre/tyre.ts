@@ -11,7 +11,8 @@ export class Tyre {
     sensor?:Sensors;
     mounting?:{
         id?:number;
-    vehicle?:Vehicles;
-    mountingDate?:Date;
+        vehicle?:Vehicles;
+        mountingDate?:Date;
+        tyre?:Tyre;
     }
 }

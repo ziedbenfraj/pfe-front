@@ -1,6 +1,9 @@
 <!-- Table of Roles -->
-<div *ngIf="listUser">
-  <table class="table table-hover table-bordered col-md-12">
+<div >
+  <button type="button" class="btn btn-info btn-sm mb-2" (click)="newVehicle(template)">
+    <i class="fas fa-plus-square"></i> New
+  </button>
+  <table class="table table-hover table-bordered col-md-12 text-center">
       <thead class="bg-dark text-white">
           <th>id</th>
           <th>type</th>
@@ -9,7 +12,7 @@
 
           <th>operations</th>
       </thead>
-      <tbody class="bg-white text-dark">
+      <tbody class="bg-white text-dark ">
           <tr *ngFor="let vehicle of vehicles">
               <td>{{vehicle.id}}</td>
               <td>{{vehicle.type}}</td>
@@ -17,39 +20,103 @@
               <td>{{vehicle.company.name}}</td>
 
               <td>
-                  <button class='btn btn-success mr-2 btn-sm' (click)="updateVehicle(vehicle)">Edit</button>
-                  <button class='btn btn-danger mr-2 btn-sm' (click)="deleteVehicle(vehicle)">Delete</button>
+                <button class='btn btn-success mr-2 btn-sm' (click)="updateVehicle(vehicle,template)">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+                <button class='btn btn-danger mr-2 btn-sm' (click)="openModal(confirmDelete)">
+                  <i class="fas fa-trash-alt"></i> Delete
+                </button>
+                 <!-- confirmDelete modal -->
+                 <ng-template #confirmDelete>
+                    <div class="modal-body text-center">
+                      <p>Do you want to confirm?</p>
+                      <button type="button" class="btn btn-success text-white mr-2" (click)="deleteVehicle(vehicle)" >
+                          <i class="fas fa-check"></i></button>
+                      <button type="button" class="btn btn-danger text-white" (click)="decline()" >
+                          <i class="fas fa-times"></i>
+                      </button>
+                    </div>
+                  </ng-template>
+                  <!-- end confirmDelete -->
+                  <button class="btn btn-info btn-sm" (click)="details(vehicle,vehicleDetail)">
+                    <i class="fas fa-dot-circle"></i> Tyres List
+                  </button>
+
               </td>
           </tr>
       </tbody>
-  </table>
-  <!-- <button class='btn btn-info mr-2 btn-sm' (click)="updateDepartement(departement)">Add new Departement</button> -->
-  <button type="button" class="btn btn-info btn-sm" (click)="newVehicle()">Create</button>
+  </table>  
 </div>
 
-<div *ngIf="addUpdate" class="col-md-7">
-  <form (ngSubmit)="processForm()">
-    <!-- type -->
-    <div class="form-group">
-        <input type="text" name="type" placeholder="type" class='form-control'
-            [(ngModel)]="vehicleObj.type" />
-    </div>
+<!-- modal -->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{operation}} Company</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="processForm(vehicleObj)" #vehicleForm="ngForm">
+      <!-- type -->
+      <div class="form-group">
+        <label for="type" class="col-form-label col-form-label-sm customLabel">
+          type :
+        </label>
+        <input type="text" id="type" name="type" placeholder="type" class='form-control' [(ngModel)]="vehicleObj.type" 
+          required minlength="3"/>
+      </div>
 
-    <!-- registrationNumber -->
-    <div class="form-group">
-      <input type="text" name="registrationNumber" placeholder="registrationNumber" class='form-control'
-          [(ngModel)]="vehicleObj.registrationNumber" />
-    </div>
-    <!-- company -->
-    <div class="form-group">
-      <select name="company" id="company" class="form-control" [(ngModel)]="vehicleObj.company">
-          <option *ngFor="let companie of companies" [ngValue]="companie">{{ companie.name }}</option>
-      </select>
-    </div>
+      <!-- registrationNumber -->
+      <div class="form-group">
+        <label for="registrationNumber" class="col-form-label col-form-label-sm customLabel">
+          registrationNumber :
+        </label> 
+        <input type="text" id="registrationNumber" name="registrationNumber" placeholder="registrationNumber" class='form-control'
+            [(ngModel)]="vehicleObj.registrationNumber" required minlength="3"/>
+      </div>
+      <!-- company -->
+      <div class="form-group">
+        <label for="company" class="col-form-label col-form-label-sm customLabel">
+          choose company :
+        </label>
+        <select name="company" id="company" class="form-control" [(ngModel)]="vehicleObj.company" required>
+            <option *ngFor="let companie of companies" [ngValue]="companie">{{ companie.name }}</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+          <input type="submit" class='btn-sm btn btn-primary' value="Save" [disabled]="vehicleForm.form.invalid" />
+      </div>
+  
+    </form>
+    <button class=' btn-sm btn btn-danger fix-cancel' (click)="decline()" >close</button>
+  </div>
+</ng-template>
 
-    <div class="form-group">
-        <input type="submit" class='btn-sm btn btn-primary' value="Save" />
-    </div>
+<!-- modal end -->
 
-  </form>
-</div>
+<ng-template #vehicleDetail>
+  <div class="modal-header text-center">
+      <p class="modal-title text-info"><i class="fas fa-dot-circle"></i> List of tyres : {{tyres.length}}</p>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body ">
+      <ul class="list-group mb-3 list-group-item d-flex" *ngFor="let tyre of tyres">
+        <div >
+          <small class="text-muted">serialNumber:  </small>
+          <span>{{tyre.serialNumber}}</span>
+        </div>
+        <div>
+          <small class="text-muted">productDescription:  </small>
+          <span>{{tyre.productDescription}}</span>
+        </div>
+        <div>
+          <small class="text-muted">brandName:  </small>
+          <span>{{tyre.brandName}}</span>
+        </div>
+      </ul>
+  </div>
+</ng-template>

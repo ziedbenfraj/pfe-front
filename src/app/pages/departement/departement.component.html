@@ -56,14 +56,14 @@
       </button>
     </div>
     <div class="modal-body">
-        <form (ngSubmit)="processForm(departement)">
+        <form (ngSubmit)="processForm(departement)" #departementForm="ngForm">
+            <!-- name -->
             <div class="form-group">
-                <input type="text" name="name" placeholder="name" class='form-control' [(ngModel)]="departement.name"
+                <label for="name" class="col-form-label col-form-label-sm customLabel">Name Of Departement :</label>
+                <input type="text" id="name" name="name" placeholder="name" class='form-control' [(ngModel)]="departement.name"
                     #name="ngModel" minlength="4" required />
             </div>
-            <!-- validation -->
-            <div *ngIf="name.invalid && (name.dirty || name.Untouched)" class="alert alert-danger">
-    
+            <div *ngIf="name.Untouched || (name.invalid && (name.dirty || name.Untouched))" class="alert alert-danger">
                 <div *ngIf="name.errors.required">
                     Name is required.
                 </div>
@@ -71,14 +71,26 @@
                     Name must be at least 4 characters
                 </div>
             </div>
-            <!-- validation end here -->
-    
-            <div class="form-group">
-                <input type="text" name="description" placeholder="Description" class='form-control'
-                    [(ngModel)]="departement.description" />
-            </div>
+            <!-- name end  -->
             
-            <button type="submit" class='btn-sm btn btn-primary'  >Save</button>
+            <!-- description -->
+            <div class="form-group">
+                <label for="description" class="col-form-label col-form-label-sm customLabel">Description :</label>
+                <input type="text" id="description" name="description" placeholder="Description" class='form-control'
+                    [(ngModel)]="departement.description" #description="ngModel" minlength="10" required />
+            </div>
+            <div *ngIf="description.invalid && (description.dirty || description.Untouched)" class="alert alert-danger">
+                <div *ngIf="description.errors.required">
+                    Name is required.
+                </div>
+                <div *ngIf="description.errors.minlength">
+                    Name must be at least 10 characters
+                </div>
+            </div>
+            <!-- description end -->
+            
+            
+            <button type="submit" class='btn-sm btn btn-primary' [disabled]="departementForm.form.invalid" >Save</button>
         </form>
         <button class=' btn-sm btn btn-danger fix-cancel' (click)="decline()">close</button>
     </div>

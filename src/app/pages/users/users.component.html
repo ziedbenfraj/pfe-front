@@ -10,7 +10,6 @@
             <th>email</th>
             <th>address</th>
             <th>phoneNumber</th>
-            <th>birthDate</th>
             <th>departement</th>
             <th>role</th>
 
@@ -22,7 +21,6 @@
                 <td>{{user.email}}</td>
                 <td>{{user.address}}</td>
                 <td>{{user.phoneNumber}}</td>
-                <td>{{user.birthDate}}</td>
                 <td>{{user.departement!=null ? user.departement.name : "default"}}</td>
                 <td>{{user.role!=null ? user.role.name : "default"}}</td>
 
@@ -30,7 +28,7 @@
                     <button class='btn btn-success mr-2 btn-sm' (click)="updateDepartement(user,template)">
                         <i class="fas fa-edit"></i> Edit
                     </button>
-                    <button class='btn btn-danger mr-2 btn-sm' (click)="openModal(confirmDelete)">
+                    <button class='btn btn-danger mr-2 btn-sm' (click)="deleteReq(confirmDelete)">
                         <i class="fas fa-trash-alt"></i> Delete
                     </button>
                     <!-- confirmDelete modal -->
@@ -45,6 +43,9 @@
                         </div>
                     </ng-template>
                     <!-- end confirmDelete -->
+                    <button class="btn btn-info btn-sm" (click)="details(user,userDetail)">
+                        <i class="fas fa-info-circle"></i> info
+                    </button>
                 </td>
             </tr>
         </tbody>
@@ -62,54 +63,109 @@
       </button>
     </div>
     <div class="modal-body " >
-        <form (ngSubmit)="processForm()">
-            <!-- first name -->
-            <div class="form-group">
-                <input type="text" name="firstName" placeholder="firstName" class='form-control'
-                    [(ngModel)]="userObj.firstName" />
+        <form (ngSubmit)="processForm()" #userForm="ngForm">
+            <div class="form-row">
+                <!-- first name -->
+                <div class="form-group col-md-6">
+                    <label for="description" class="col-form-label col-form-label-sm customLabel">
+                        First Name :
+                    </label>
+                    <input type="text" name="firstName" placeholder="firstName" class='form-control'
+                        [(ngModel)]="userObj.firstName" #firstName="ngModel" minlength="3" required/>
+                </div>
+                
+                <!-- last name -->
+                <div class="form-group col-md-6">
+                    <label for="description" class="col-form-label col-form-label-sm customLabel">
+                        Last Name :
+                    </label>
+                    <input type="text" name="lastName" placeholder="lastName" class='form-control'
+                        [(ngModel)]="userObj.lastName" #lastName="ngModel" minlength="3" required/>
+                </div>
             </div>
-            <!-- last name -->
-            <div class="form-group">
-                <input type="text" name="lastName" placeholder="lastName" class='form-control'
-                    [(ngModel)]="userObj.lastName" />
+            <!-- validation of first name -->
+            <div *ngIf="(firstName.invalid && (firstName.dirty || firstName.Untouched)) || 
+                        (lastName.invalid && (lastName.dirty || lastName.Untouched))" 
+            class="alert alert-danger">
+                3 characters at least 
             </div>
             <!-- email -->
             <div class="form-group">
-                <input type="email" name="email" placeholder="email" class='form-control' [(ngModel)]="userObj.email" />
+                <label for="description" class="col-form-label col-form-label-sm customLabel">
+                    Email :
+                </label>
+                <input type="email" name="email" placeholder="email" class='form-control' [(ngModel)]="userObj.email" 
+                required #email="ngModel" minlength="6" email/>
             </div>
+            <div *ngIf="email.invalid && (email.dirty || email.Untouched)" class="alert alert-danger">
+                type a valid email 
+            </div>
+            <!-- email end -->
+
             <!-- address -->
             <div class="form-group">
-                <input type="text" name="address" placeholder="address" class='form-control' [(ngModel)]="userObj.address" />
+                <label for="description" class="col-form-label col-form-label-sm customLabel">
+                    Address :
+                </label>
+                <input type="text" name="address" placeholder="address" class='form-control' [(ngModel)]="userObj.address"
+                required minlength="4" maxlength="25" />
             </div>
+            <!-- adress end  -->
+
             <!-- phoneNumber -->
             <div class="form-group">
+                <label for="description" class="col-form-label col-form-label-sm customLabel">
+                    phone Number :
+                </label>
                 <input type="text" name="phoneNumber" placeholder="phoneNumber" class='form-control'
-                    [(ngModel)]="userObj.phoneNumber" />
+                    [(ngModel)]="userObj.phoneNumber" required minlength="4" maxlength="25" />
             </div>
+            <!-- phone Number -->
+
             <!-- birthDate -->
             <div class="form-group">
+                <label for="description" class="col-form-label col-form-label-sm customLabel">
+                    Birthday :
+                </label>
                 <input type="date" name="birthDate" placeholder="birthDate" class='form-control'
-                    [(ngModel)]="userObj.birthDate" />
+                    [(ngModel)]="userObj.birthDate" required  />
             </div>
-            <!-- userName -->
-            <div class="form-group">
-                <input type="text" name="userName" placeholder="userName" class='form-control'
-                    [(ngModel)]="userObj.userName" />
-            </div>
-            <!-- password -->
-            <div class="form-group" *ngIf="displayPassword">
-                <input type="text" name="password" placeholder="password" class='form-control'
-                    [(ngModel)]="userObj.password" />
-            </div>
+
+            <div class="form-row">
+                <!-- userName -->
+                <div class="form-group col-md-6">
+                    <label for="description" class="col-form-label col-form-label-sm customLabel">
+                        UserName :
+                    </label>
+                    <input type="text" name="userName" placeholder="userName" class='form-control'
+                        [(ngModel)]="userObj.userName" required minlength="3" maxlength="10"/>
+                </div>
+                <!-- password -->
+                <div class="form-group col-md-6" *ngIf="displayPassword">
+                    <label for="description" class="col-form-label col-form-label-sm customLabel">
+                        password :
+                    </label>
+                    <input type="password" name="password" placeholder="password" class='form-control'
+                        [(ngModel)]="userObj.password" required minlength="3" maxlength="10"/>
+                </div>
+            </div>  
+
             <!-- departement -->
             <div class="form-group">
-                <select name="departement" id="departement" class="form-control" [(ngModel)]="userObj.departement">
+                <label for="description" class="col-form-label col-form-label-sm customLabel">
+                    Departement :
+                </label>
+                <select name="departement" id="departement" class="form-control" [(ngModel)]="userObj.departement"
+                required>
                     <option *ngFor="let items of departements" [ngValue]="items">{{ items.name }}</option>
                 </select>
             </div>
             <!-- role -->
             <div class="form-group">
-                <select name="role" id="role" class="form-control" [(ngModel)]="userObj.role">
+                <label for="description" class="col-form-label col-form-label-sm customLabel">
+                    role :
+                </label>
+                <select name="role" id="role" class="form-control" [(ngModel)]="userObj.role" required>
                     <option *ngFor="let item of roles" [ngValue]="item">{{ item.name }}</option>
                 </select>
             </div>
@@ -124,10 +180,82 @@
             <!-- <div class="form-group">
                 <input type="submit" class='btn-sm btn btn-primary' value="Save" />
             </div> -->
-            <button type="submit" class='btn-sm btn btn-primary'  >Save</button>
+            <button type="submit" class='btn-sm btn btn-primary' [disabled]="userForm.form.invalid" >Save</button>
         </form>
         <button   class='fix-cancel btn-sm btn btn-danger' (click)="modalRef.hide()">close</button>
     </div>
   </ng-template>
 
   <!-- modal end -->
+
+
+  <!-- user Details -->
+  <ng-template #userDetail>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Detail </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body text-center">
+        <ul class="list-group mb-3">
+            <li class="list-group-item d-flex  ">
+              <div>
+                <small class="text-muted">first Name:  </small>
+                <span>{{user.firstName}}</span>
+              </div>
+            </li>
+            <li class="list-group-item d-flex  ">
+                <div>
+                  <small class="text-muted">last Name:  </small>
+                  <span>{{user.lastName}}</span>
+                </div>
+              </li>
+              <li class="list-group-item d-flex  ">
+                <div>
+                  <small class="text-muted">email:  </small>
+                  <span>{{user.email}}</span>
+                </div>
+              </li>
+              <li class="list-group-item d-flex  ">
+                <div>
+                  <small class="text-muted">address:  </small>
+                  <span>{{user.address}}</span>
+                </div>
+              </li>
+              <li class="list-group-item d-flex  ">
+                <div>
+                  <small class="text-muted">phone Number:  </small>
+                  <span>{{user.phoneNumber}}</span>
+                </div>
+              </li>
+              <li class="list-group-item d-flex  ">
+                <div>
+                  <small class="text-muted">birthDate:  </small>
+                  <span>{{user.birthDate}}</span>
+                </div>
+              </li>
+              <li class="list-group-item d-flex  ">
+                <div>
+                  <small class="text-muted">userName:  </small>
+                  <span>{{user.userName}}</span>
+                </div>
+              </li>
+              <li class="list-group-item d-flex  ">
+                <div>
+                  <small class="text-muted">departement:  </small>
+                  <span>{{user.departement.name}}</span>
+                </div>
+              </li>
+              <li class="list-group-item d-flex  ">
+                <div>
+                  <small class="text-muted">role:  </small>
+                  <span>{{user.role.name}}</span>
+                </div>
+              </li>
+              
+          </ul>
+    
+    </div>
+</ng-template>
+<!-- usr details end -->

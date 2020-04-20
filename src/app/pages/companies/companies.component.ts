@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CompaniesService } from 'src/app/services/companies/companies.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Vehicles } from 'src/app/models/vehicles/vehicles';
 
 @Component({
   selector: 'app-companies',
@@ -16,6 +17,10 @@ export class CompaniesComponent implements OnInit {
   
   public companies: Companies[];
   public companie: Companies;
+  public vehicles: Vehicles[];
+
+  public companyName:string="";
+  public operation:string="";
   // constructor
   constructor(private _compService: CompaniesService, private _router: Router,
     private _authService: AuthenticationService,private modalService: BsModalService) { }
@@ -62,12 +67,12 @@ export class CompaniesComponent implements OnInit {
 
   //update
   updateCompanie(companie,template: TemplateRef<any>) {
-   // localStorage.setItem("update",departement)
-    // this._depService.setter(departement);
+    this.operation="Edit";
     this.companie=companie;
     this.modalRef = this.modalService.show(template);
   }
   newCompanie(template: TemplateRef<any>) {
+    this.operation="Add";
     this.companie=new Companies;
     this.modalRef = this.modalService.show(template);
   }
@@ -121,6 +126,14 @@ export class CompaniesComponent implements OnInit {
       });
     }
     this.closeForm();
+  }
+
+  // function to show the vehicles of company
+  details(companie,companyDetail: TemplateRef<any>){
+    this.companie=companie;
+    this.vehicles=this.companie.vehicles;
+    this.companyName=companie.name;
+    this.modalRef = this.modalService.show(companyDetail, {class: 'modal-sm'});
   }
 
 }

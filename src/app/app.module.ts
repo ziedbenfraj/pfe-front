@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import {NgxPaginationModule} from 'ngx-pagination';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -32,6 +33,7 @@ import { SensorsComponent } from './pages/sensors/sensors.component';
 // modal
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { MeasuresComponent } from './pages/measures/measures.component';
+import { MaterialsModule } from './materials/materials.module';
 
 
 @NgModule({
@@ -61,6 +63,9 @@ import { MeasuresComponent } from './pages/measures/measures.component';
     CommonModule,
     BrowserAnimationsModule,
     ModalModule.forRoot(),
+    NgxPaginationModule,
+    ReactiveFormsModule,
+    MaterialsModule
     ],
   providers: [
     RoleService

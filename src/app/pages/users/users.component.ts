@@ -158,7 +158,7 @@ export class UsersComponent implements OnInit {
   }
 
   // confrim Delete MODAL
-  openModal(confirmDelete: TemplateRef<any>) {
+  deleteReq(confirmDelete: TemplateRef<any>) {
     this.modalRef = this.modalService.show(confirmDelete, {class: 'modal-sm'});
   }
   confirm(user) {
@@ -169,6 +169,13 @@ export class UsersComponent implements OnInit {
  
   decline(): void {
     this.modalRef.hide();
+  }
+  // delete end
+
+  // user details
+  details(user,userDetail: TemplateRef<any>){
+    this.user=user;
+    this.modalRef = this.modalService.show(userDetail, {class: 'modal-sm'});
   }
 
 }

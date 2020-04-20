@@ -1,5 +1,8 @@
 <!-- Table of Roles -->
-<div *ngIf="listUser">
+<div >
+    <button type="button" class="btn btn-info btn-sm mb-2" (click)="newTyre(template)">
+        <i class="fas fa-plus-square"></i> New
+    </button>
   <table class="table table-hover table-bordered col-md-12">
       <thead class="bg-dark text-white">
           <th>id</th>
@@ -22,68 +25,112 @@
 
 
               <td>
-                  <button class='btn btn-success mr-2 btn-sm' (click)="updateTyre(tyre)">Edit</button>
-                  <button class='btn btn-danger mr-2 btn-sm' (click)="deleteTyre(tyre)">Delete</button>
+                <button class='btn btn-success mr-2 btn-sm' (click)="updateTyre(tyre,template)">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+                <button class='btn btn-danger mr-2 btn-sm' (click)="openModal(confirmDelete)">
+                  <i class="fas fa-trash-alt"></i> Delete
+                </button>
+                 <!-- confirmDelete modal -->
+                 <ng-template #confirmDelete>
+                    <div class="modal-body text-center">
+                      <p>Do you want to confirm?</p>
+                      <button type="button" class="btn btn-success text-white mr-2" (click)="confirm(tyre)" >
+                          <i class="fas fa-check"></i></button>
+                      <button type="button" class="btn btn-danger text-white" (click)="decline()" >
+                          <i class="fas fa-times"></i>
+                      </button>
+                    </div>
+                  </ng-template>
+                  <!-- end confirmDelete -->
+                  <button class="btn btn-info btn-sm" (click)="details(vehicle,vehicleDetail)">
+                    info
+                  </button>
+
               </td>
           </tr>
       </tbody>
   </table>
-  <!-- <button class='btn btn-info mr-2 btn-sm' (click)="updateDepartement(departement)">Add new Departement</button> -->
-  <button type="button" class="btn btn-info btn-sm" (click)="newTyre()">Create</button>
 </div>
 
-<div *ngIf="addUpdate" class="col-md-7">
-  <form (ngSubmit)="processForm()">
-    <!-- serialNumber -->
-    <div class="form-group">
-        <input type="text" name="serialNumber" placeholder="serialNumber" class='form-control'
-            [(ngModel)]="tyreObj.serialNumber" />
+<!-- modal -->
+<ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{operation}} tyre</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
-
-    <!-- productCode -->
-    <div class="form-group">
-      <input type="text" name="productCode" placeholder="productCode" class='form-control'
-          [(ngModel)]="tyreObj.productCode" />
+    <div class="modal-body">
+        <form (ngSubmit)="processForm(tyreObj)" #tyreForm="ngForm">
+            <!-- serialNumber -->
+            <div class="form-group">
+                <label for="serialNumber" class="col-form-label col-form-label-sm customLabel">
+                    serial Number :
+                  </label>
+                <input type="text" id="serialNumber" name="serialNumber" placeholder="serialNumber" class='form-control'
+                    [(ngModel)]="tyreObj.serialNumber" required minlength="3"/>
+            </div>
+        
+            <!-- productCode -->
+            <div class="form-group">
+                <label for="productCode" class="col-form-label col-form-label-sm customLabel">
+                    product Code:
+                  </label>
+              <input type="text" id="productCode" name="productCode" placeholder="productCode" class='form-control'
+                  [(ngModel)]="tyreObj.productCode" required minlength="3"/>
+            </div>
+        
+           <!-- productDescription -->
+           <div class="form-group">
+            <label for="productDescription" class="col-form-label col-form-label-sm customLabel">
+                product Description:
+              </label>
+            <input type="text" id="productDescription" name="productDescription" placeholder="productDescription" class='form-control'
+                [(ngModel)]="tyreObj.productDescription" required minlength="3"/>
+            </div>
+            <!-- brandName -->
+           <div class="form-group">
+            <label for="brandName" class="col-form-label col-form-label-sm customLabel">
+                brand Name :
+              </label>
+            <input type="text" id="brandName" name="brandName" placeholder="brandName" class='form-control'
+                [(ngModel)]="tyreObj.brandName" required minlength="3"/>
+            </div>
+        
+            <!-- sensors -->
+            <div class="form-group">
+                <label for="brandName" class="col-form-label col-form-label-sm customLabel">
+                    choose sensor :
+                </label>
+            <select name="sensor" id="sensor" class="form-control" [(ngModel)]="tyreObj.sensor">
+                <option *ngFor="let items of sensors" [ngValue]="items" >
+                    {{ items.name  }}
+                </option>
+            </select>
+            </div>
+            <div *ngIf="sensors.length==0" class="alert alert-danger">
+                No sensor available 
+            </div>
+            <!-- mounting -->
+            <div class="form-group">
+                <label for="vehicle" class="col-form-label col-form-label-sm customLabel">
+                    choose vehicle :
+                </label>
+                <select name="vehicle" id="vehicle" class="form-control" [(ngModel)]="zied" required>
+                    <option [ngValue]="" selected>----</option>
+                    <option *ngFor="let item of vehicles" [ngValue]="item" >
+                        {{ item.registrationNumber  }}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" class='btn-sm btn btn-primary' value="Save" [disabled]="tyreForm.form.invalid"/>
+            </div>
+        
+          </form>
+      <button class=' btn-sm btn btn-danger fix-cancel' (click)="decline()" >close</button>
     </div>
-
-   <!-- productDescription -->
-   <div class="form-group">
-    <input type="text" name="productDescription" placeholder="productDescription" class='form-control'
-        [(ngModel)]="tyreObj.productDescription" />
-    </div>
-    <!-- brandName -->
-   <div class="form-group">
-    <input type="text" name="brandName" placeholder="brandName" class='form-control'
-        [(ngModel)]="tyreObj.brandName" />
-    </div>
-
-    <!-- sensors -->
-    <div class="form-group">
-    <select name="sensor" id="sensor" class="form-control" [(ngModel)]="tyreObj.sensor">
-        <option *ngFor="let items of sensors" [ngValue]="items" >
-            {{ items.id  }}
-        </option>
-    </select>
-    </div>
-    <!-- {{ (items.tyre==null) && items.id  }} -->
-
-    <!-- mounting -->
-    <div class="form-group">
-        <select name="vehicle" id="vehicle" class="form-control" [(ngModel)]="zied">
-            <option *ngFor="let item of vehicles" [ngValue]="item" >
-                {{ item.registrationNumber  }}
-            </option>
-        </select>
-    </div>
-
-    
-
-
-    
-
-    <div class="form-group">
-        <input type="submit" class='btn-sm btn btn-primary' value="Save" />
-    </div>
-
-  </form>
-</div>
+  </ng-template>
+  
+  <!-- modal end -->
