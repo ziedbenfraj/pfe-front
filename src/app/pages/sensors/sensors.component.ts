@@ -15,8 +15,11 @@ export class SensorsComponent implements OnInit {
 
   public listUser: boolean = true;
   public addUpdate: boolean = false;
-  public sensors: Sensors[];
+  public sensors:Sensors[];
+  public sensor:Sensors;
   public sensorObj: Sensors = new Sensors();
+
+  public x:Tyre;
 
   constructor(private _router: Router, private _authService: AuthenticationService,
     private _SensorService: SensorsService,private _tyreService:TyreService) { }
@@ -39,17 +42,28 @@ export class SensorsComponent implements OnInit {
 
   //delete
   deleteSensor(sensor: Sensors) {
+    console.log(sensor.tyre);
+    if(sensor.tyre!=null){
+      this.x=sensor.tyre;
+      this.x.sensor=null;
+      this._tyreService.updateTyre(sensor.tyre).subscribe(() => {
+        console.log("y rab setrek");
+        this.ngOnInit();
+      }, (error) => {
+        console.log(error);
+      });
+    }
+    
     this._SensorService.deleteSensor(sensor.id).subscribe(() => {
       this.sensors.splice(this.sensors.indexOf(sensor), 1);
     }, (error) => {
       console.log(error);
     });
+    this.ngOnInit();
   }
 
   //update
   updateSensor(sensor) {
-    // localStorage.setItem("update",departement)
-    // this._depService.setter(departement);
     this.sensorObj = sensor;
     this.listUser = false;
     this.addUpdate = true;

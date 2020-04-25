@@ -10,6 +10,7 @@ import { VehiclesService } from 'src/app/services/vehicles/vehicles.service';
 import { Mounting } from 'src/app/models/mounting/mounting';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { MountingService } from 'src/app/services/mountings/mounting.service';
+import { Measures } from 'src/app/models/measures/measures';
 
 @Component({
   selector: 'app-tyres',
@@ -21,13 +22,17 @@ export class TyresComponent implements OnInit {
   public listUser: boolean = true;
   public addUpdate: boolean = false;
   public tyres: Tyre[];
-  public tyreObj: Tyre = new Tyre();
+  public tyreObj = new Tyre();
+  public tyre:Tyre;
+
+  public detailMeasures:Measures[];
+  public showMeasure:boolean=false;
 
   public sensors=new Array();
   public vehicles:Vehicles[];
 
-  public yyy:Mounting=new Mounting();
-  public zied:Vehicles=new Vehicles();
+  public mounting=new Mounting();
+  public vehicleSelected=new Vehicles();
 
   modalRef: BsModalRef;
   public operation:string="";
@@ -72,36 +77,22 @@ export class TyresComponent implements OnInit {
     });
   };
 
-  //delete
+  //delete tyre
   deleteTyre(tyre: Tyre) {
+    // console.log(tyre.mounting);
+    // console.log(typeof(tyre.mounting));
     this._tyreService.deleteTyre(tyre.id).subscribe(() => {
-      this._mountingService.deleteMounting(tyre.mounting.id);
+      // delete the mounting of this tyre if exist
+      if(tyre.mounting!=null){
+        this._mountingService.deleteMounting(tyre.mounting.id);
+      }
       this.tyres.splice(this.tyres.indexOf(tyre), 1);
     }, (error) => {
       console.log(error);
     });
   }
 
-  //update
-  updateTyre(tyre,template: TemplateRef<any>) {
-    this.operation="Edit";
-    this.onGetSensor();
-    this.onGetVehicle();
-    this.tyreObj = tyre;
-
-    this.yyy=this.tyreObj.mounting;
-    this.zied=this.yyy.vehicle;
-
-    this.modalRef = this.modalService.show(template);
-  }
-  newTyre(template: TemplateRef<any>) {
-    this.operation="Add";
-    
-    console.log(this.zied);
-    this.onGetSensor();
-    this.onGetVehicle();
-    this.modalRef = this.modalService.show(template);
-  }
+ 
 
   //delete
   openModal(confirmDelete: TemplateRef<any>) {
@@ -145,28 +136,76 @@ export class TyresComponent implements OnInit {
     this.modalRef.hide();
   }
 
-  processForm() {
-    console.log(this.zied);
-    // this.yyy.vehicle=this.zied;
-    // // this.yyy.tyre=tyreObj;
-    // this.tyreObj.mounting=this.yyy;
-    // if (this.tyreObj.id == undefined) {
-    //   this._tyreService.createTyre(this.tyreObj).subscribe((sensor) => {
-    //     this.ngOnInit();
-    //   }, (error) => {
-    //     console.log(error);
+   //update
+   updateTyre(tyre,template: TemplateRef<any>) {
+    this.operation="Edit";
+    this.onGetSensor();
+    this.onGetVehicle();
+    this.tyreObj = tyre;
 
-    //   });
-    // } else {
-    //   console.log(this.tyreObj);
-    //   this._tyreService.updateTyre(this.tyreObj).subscribe((tyre) => {
-    //     this.ngOnInit();
-    //   }, (error) => {
-    //     console.log(error);
-    //   });
-    // }
+    // if exist mounting load it 
+    if(this.tyreObj.mounting!=null){
+      this.mounting=this.tyreObj.mounting;
+      this.vehicleSelected=this.mounting.vehicle;
+    }
+    
+    
+
+    this.modalRef = this.modalService.show(template);
+  }
+  newTyre(template: TemplateRef<any>) {
+    this.operation="Add";
+    this.onGetSensor();
+    this.onGetVehicle();
+    this.modalRef = this.modalService.show(template);
+  }
+
+  processForm() {
+    // console.log(this.vehicleSelected.id);
+    // console.log(typeof(this.vehicleSelected));
+    if(this.vehicleSelected.id!=null ){
+      this.mounting.vehicle=this.vehicleSelected;
+      this.tyreObj.mounting=this.mounting;
+    }else{
+      this.tyreObj.mounting=null;
+    }
+    if(this.tyreObj.sensor==undefined){
+      this.tyreObj.sensor=null;
+    }
+    
+    if (this.tyreObj.id == undefined) {
+      this._tyreService.createTyre(this.tyreObj).subscribe((sensor) => {
+        this.ngOnInit();
+      }, (error) => {
+        console.log(error);
+
+      });
+    } else {
+      this._tyreService.updateTyre(this.tyreObj).subscribe((tyre) => {
+        this.ngOnInit();
+      }, (error) => {
+        console.log(error);
+      });
+    }
     this.closeForm();
     
+  }
+
+  // details of tyre
+  details(tyre,tyreDetail){
+    this.tyre=tyre;
+    if(tyre.sensor!=null && tyre.sensor.measures!=null){
+      this.detailMeasures=tyre.sensor.measures;
+    }else{
+      this.detailMeasures=null;
+    }
+    
+    console.log(this.tyre);
+    console.log(this.detailMeasures);
+    this.modalRef = this.modalService.show(tyreDetail);
+  }
+  showMeasures(){
+    this.showMeasure=!this.showMeasure;
   }
 
 }

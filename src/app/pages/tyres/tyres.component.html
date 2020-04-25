@@ -5,12 +5,12 @@
     </button>
   <table class="table table-hover table-bordered col-md-12">
       <thead class="bg-dark text-white">
-          <th>id</th>
-          <th>serialNumber</th>
-          <th>productCode</th>
-          <th>productDescription</th>
-          <th>brandName</th>
-          <th>mounting</th>
+          <th>Id</th>
+          <th>Serial Number</th>
+          <th>Code</th>
+          <th>Description</th>
+          <th>BrandName</th>
+          <th>Vehicle type</th>
 
           <th>operations</th>
       </thead>
@@ -21,7 +21,9 @@
               <td>{{tyre.productCode}}</td>
               <td>{{tyre.productDescription}}</td>
               <td>{{tyre.brandName}}</td>
-              <td>{{tyre.mounting!=null ? tyre.mounting.vehicle.type : "not mount"}}</td>
+              <td >
+                  {{tyre.mounting!=null ? tyre.mounting.vehicle.type : "NOT MOUNT"}}
+            </td>
 
 
               <td>
@@ -43,9 +45,10 @@
                     </div>
                   </ng-template>
                   <!-- end confirmDelete -->
-                  <button class="btn btn-info btn-sm" (click)="details(vehicle,vehicleDetail)">
-                    info
+                  <button class="btn btn-info btn-sm" (click)="details(tyre,tyreDetail)">
+                    <i class="fas fa-dot-circle"></i> info
                   </button>
+                  
 
               </td>
           </tr>
@@ -104,6 +107,7 @@
                     choose sensor :
                 </label>
             <select name="sensor" id="sensor" class="form-control" [(ngModel)]="tyreObj.sensor">
+                <option [ngValue]="null" >No sensor</option>
                 <option *ngFor="let items of sensors" [ngValue]="items" >
                     {{ items.name  }}
                 </option>
@@ -117,8 +121,8 @@
                 <label for="vehicle" class="col-form-label col-form-label-sm customLabel">
                     choose vehicle :
                 </label>
-                <select name="vehicle" id="vehicle" class="form-control" [(ngModel)]="zied" required>
-                    <option [ngValue]="" selected>----</option>
+                <select name="vehicle" class="form-control" [(ngModel)]="vehicleSelected" >
+                    <option [ngValue]="" >No Vehicle</option>
                     <option *ngFor="let item of vehicles" [ngValue]="item" >
                         {{ item.registrationNumber  }}
                     </option>
@@ -134,3 +138,80 @@
   </ng-template>
   
   <!-- modal end -->
+
+  <!-- detail of tyres -->
+  <ng-template #tyreDetail>
+    <div class="modal-header text-center">
+        <p class="modal-title text-info"><i class="fas fa-dot-circle"></i> Tyre informations
+            <!-- Nombre de Measures : {{detailMeasures!=null ? detailMeasures.length : '0'}} -->
+        </p>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body ">
+        
+          <div >
+            <small class="text-muted">serialNumber:  </small>
+            <span>{{tyre.serialNumber}}</span>
+          </div>
+          <div>
+            <small class="text-muted">productDescription:  </small>
+            <span>{{tyre.productDescription}}</span>
+          </div>
+          <div>
+            <small class="text-muted">brandName:  </small>
+            <span>{{tyre.brandName}}</span>
+          </div>
+          <div>
+            <small class="text-muted">productCode:  </small>
+            <span>{{tyre.productCode}}</span>
+          </div>
+          <hr>
+          <p class="text-success">
+            <i class="fas fa-bell"></i> Sensor Details 
+          </p>
+          <div>
+            <span  *ngIf="detailMeasures==null">No Sensor Mounted <i class="fas fa-frown"></i></span>
+        </div>
+          <div *ngIf="detailMeasures!=null">
+            <div>
+                <small class="text-muted">name:  </small>
+                <span>{{tyre.sensor.name}}</span>
+            </div>
+            <div>
+                <small class="text-muted">serialNumber:  </small>
+                <span>{{tyre.sensor.serialNumber}}</span>
+            </div>
+            <div>
+                <small class="text-muted">description:  </small>
+                <span>{{tyre.sensor.description}}</span>
+            </div>
+          </div>
+          <button type="button" class="btn btn-info btn-sm mt-2 mb-2" (click)="showMeasures()">
+              <i class="fas fa-weight" ></i> Measures History
+            </button>
+          <!-- Measures details -->
+          <div class="table-responsive-md" *ngIf="showMeasure">
+            <div class="table-responsive">
+              <table class="table table-hover table-bordered">
+                <thead class="bg-dark text-white">
+                  <tr>
+                    <th >pressure</th>
+                    <th >temperature</th>
+                    <th >dateOfMeasure</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white text-dark">
+                  <tr *ngFor="let measure of detailMeasures">
+                    <td>{{measure.pressure}}</td>
+                    <td>{{measure.temperature}}</td>
+                    <td class="text-info">{{measure.dateOfMeasure}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+    </div>
+  </ng-template>
+  <!-- end details of tyre -->

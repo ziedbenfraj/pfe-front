@@ -156,8 +156,14 @@
                     Departement :
                 </label>
                 <select name="departement" id="departement" class="form-control" [(ngModel)]="userObj.departement"
-                required>
-                    <option *ngFor="let items of departements" [ngValue]="items">{{ items.name }}</option>
+                required >
+                    
+                    <option *ngFor="let items of departements" [ngValue]="items" selected>
+                        <!-- <ng-container *ngIf="userObj.departement == items ? dzdz : 'ssss'"></ng-container> -->
+                        {{ items.name }}
+                        
+                    </option>
+
                 </select>
             </div>
             <!-- role -->

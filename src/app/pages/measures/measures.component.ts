@@ -3,6 +3,8 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Measures } from 'src/app/models/measures/measures';
 import { MeasuresService } from 'src/app/services/measures/measures.service';
 import { SensorsService } from 'src/app/services/sensors/sensors.service';
+import {MatTableDataSource} from '@angular/material/table';
+
 
 @Component({
   selector: 'app-measures',
@@ -10,6 +12,10 @@ import { SensorsService } from 'src/app/services/sensors/sensors.service';
   styleUrls: ['./measures.component.scss']
 })
 export class MeasuresComponent implements OnInit {
+  // filter
+  public ELEMENT_DATA:Measures[];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  dataSource = new MatTableDataSource(this.ELEMENT_DATA);
   // modal
   modalRef: BsModalRef;
   public operation:string="";
@@ -37,6 +43,7 @@ export class MeasuresComponent implements OnInit {
   getMeasures(){
     this._measureService.getMeasures().subscribe((sensors)=>{
       this.measuresList=sensors;
+      this.ELEMENT_DATA=this.measuresList;
     }, (error) => {
       console.log(error);
     })

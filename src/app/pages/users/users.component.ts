@@ -39,6 +39,8 @@ export class UsersComponent implements OnInit {
   //get all departement
   ngOnInit() {
     this.OnGetAllUsers();
+    this.onGetRole();
+    this.onGetDepartement();
   }
 
   // close function 
@@ -89,6 +91,7 @@ export class UsersComponent implements OnInit {
     // localStorage.setItem("update",departement)
     // this._depService.setter(departement);
     this.displayPassword=false;
+    console.log(user);
     this.userObj = user;
     this.onGetRole();
     this.onGetDepartement();
@@ -97,9 +100,9 @@ export class UsersComponent implements OnInit {
   }
   newUser(template: TemplateRef<any>) {
     this.displayPassword=true;
+    this.operation="Add new User";
     this.onGetRole();
     this.onGetDepartement();
-    this.operation="Add new User";
     this.modalRef = this.modalService.show(template);  
   }
 
