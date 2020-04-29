@@ -58,6 +58,7 @@ export class TyresComponent implements OnInit {
    // get sensor
    onGetSensor() {
     this._sensorService.getSensors().subscribe((sensor) => {
+      this.sensors=[];
       sensor.forEach(item => {
         if(item.tyre==null) this.sensors.push(item);
       });
@@ -82,10 +83,6 @@ export class TyresComponent implements OnInit {
     // console.log(tyre.mounting);
     // console.log(typeof(tyre.mounting));
     this._tyreService.deleteTyre(tyre.id).subscribe(() => {
-      // delete the mounting of this tyre if exist
-      if(tyre.mounting!=null){
-        this._mountingService.deleteMounting(tyre.mounting.id);
-      }
       this.tyres.splice(this.tyres.indexOf(tyre), 1);
     }, (error) => {
       console.log(error);
@@ -162,7 +159,7 @@ export class TyresComponent implements OnInit {
 
   processForm() {
     // console.log(this.vehicleSelected.id);
-    // console.log(typeof(this.vehicleSelected));
+    
     if(this.vehicleSelected.id!=null ){
       this.mounting.vehicle=this.vehicleSelected;
       this.tyreObj.mounting=this.mounting;

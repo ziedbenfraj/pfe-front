@@ -17,7 +17,7 @@
               <td>{{vehicle.id}}</td>
               <td>{{vehicle.type}}</td>
               <td>{{vehicle.registrationNumber}}</td>
-              <td>{{vehicle.company.name}}</td>
+              <td>{{vehicle.company!=null ? vehicle.company.name : "Unselected"}}</td>
 
               <td>
                 <button class='btn btn-success mr-2 btn-sm' (click)="updateVehicle(vehicle,template)">

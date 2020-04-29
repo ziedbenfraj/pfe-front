@@ -22,7 +22,7 @@
               <td>{{tyre.productDescription}}</td>
               <td>{{tyre.brandName}}</td>
               <td >
-                  {{tyre.mounting!=null ? tyre.mounting.vehicle.type : "NOT MOUNT"}}
+                  {{tyre.mounting!=null&&tyre.mounting.vehicle!=null ? tyre.mounting.vehicle.type : "NOT MOUNT"}}
             </td>
 
 
