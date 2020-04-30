@@ -37,6 +37,18 @@ export class MeasuresComponent implements OnInit {
 
   
   searchText:string;
+  sensorName:string;
+  searchDate:string;
+  showFilter:boolean=false;
+
+  displayFilter(){
+    this.showFilter=!this.showFilter;
+    if(this.showFilter==false){
+      this.searchText=null;
+      this.sensorName=null;
+      this.searchDate=null;
+    }
+  }
 
 
 
@@ -53,9 +65,16 @@ export class MeasuresComponent implements OnInit {
   getMeasures(){
     this._measureService.getMeasures().subscribe((sensors)=>{
       this.measuresList=sensors;
+      console.log(this.measuresList);
     }, (error) => {
       console.log(error);
     })
+  }
+
+  measureInfo(measure,measureDetail){
+    this.measure=measure;
+    console.log(this.measure);
+    this.modalRef = this.modalService.show(measureDetail);
   }
 
   // get sensors methods

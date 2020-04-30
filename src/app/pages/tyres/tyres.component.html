@@ -124,7 +124,7 @@
                 <select name="vehicle" class="form-control" [(ngModel)]="vehicleSelected" >
                     <option [ngValue]="" >No Vehicle</option>
                     <option *ngFor="let item of vehicles" [ngValue]="item" >
-                        {{ item.registrationNumber  }}
+                        {{ item.type  }}
                     </option>
                 </select>
             </div>

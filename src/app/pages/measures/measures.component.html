@@ -2,28 +2,46 @@
   <!-- All Measures -->
   <div class="col-12 col-xl-12 mb-4 align-items-stretch">
     <div class="card h-100 border-0 rounded-0">
-      <div class="card-title mb-1 p-3 d-flex">
-        <h6>Measures</h6>
+      <div class="card-title mb-1 p-3 d-flex" style="min-height: 70px;">
+        <h6 >Measures</h6>
         
-        <a class="btn ml-auto p-0 text-lightning"> <i class="fas fa-ellipsis-h"></i> </a>
-        
-      
+        <a class="btn ml-auto p-0 text-lightning " 
+          style="position: absolute;right: 20px;top:24px" (click)="displayFilter()"> 
+          <i class="fas fa-search"></i>
+        </a>
+        <!-- filter -->
+        <!-- style="margin-top: 30px;position: absolute;right: 20px;margin-bottom: 10px;"> -->
+        <div class="form-group  row float-right" 
+              style="position: absolute;right: 50px;" *ngIf="showFilter">
+
+          <div class="col-md-4 float-right">
+            <select   class="form-control col-md-12 float-right" [(ngModel)]="sensorName" >
+              <option [ngValue]="null" selected="selected">All Sensors</option>
+              <option *ngFor="let sensor of sensorList" [ngValue]="sensor.name">{{ sensor.name }}</option>
+            </select>
+          </div>
+          <div class="col-md-4 float-right">
+            <input type="date" [(ngModel)]="searchDate" class="form-control" style="width: 100%;"
+              >
+          </div>
+          <div class="col-md-4 float-right">
+              <input type="text" [(ngModel)]="searchText" class="form-control" style="width: 100%;"
+              placeholder="Search measure...">
+            </div>
+          
+        </div>
+        <!-- filter end here -->
+
       </div>
       <div class="card-body">
         <div class="table-responsive-md">
               <button type="button" class="btn btn-info btn-sm mb-2 " (click)="newMeasures(template)">
                 <i class="fas fa-plus-square"></i> Create
               </button>
-          
-            <div class="form-group col-md-6  float-right">
-              <input type="text"
-             [(ngModel)]="searchText"
-             class="form-control"
-             style="width: 100%;"
-             placeholder="Search notes...">
-            </div>
+            
+            
           <div class="table-responsive">
-            <table class="table table-hover table-bordered" >
+            <table class="table table-hover table-bordered text-center" >
               <thead class="bg-dark text-white" >
                 <tr >
                   <th matColumnDef="pressure">pressure</th>
@@ -34,10 +52,11 @@
                 </tr>
               </thead>
               <tbody class="bg-white text-dark">
-                <tr *ngFor="let measure of measuresList | measuresPipe:searchText
+                <tr *ngFor="let measure of measuresList | measuresPipe:searchText 
+                | measuresPipeBySensor:sensorName | measuresPipeByDate:searchDate
                 | paginate: { itemsPerPage: 5, currentPage: p }">
-                  <td>{{measure.pressure}}</td>
-                  <td>{{measure.temperature}}</td>
+                  <td>{{measure.pressure}} Pa</td>
+                  <td>{{measure.temperature}} °C</td>
                   <td>{{measure.sensor.name}}</td>
                   <td class="text-info">{{measure.dateOfMeasure}}</td>
                   <td>
@@ -60,6 +79,10 @@
                         </div>
                     </ng-template>
                     <!-- end confirmDelete -->
+                    <button type="button" class="btn btn-info text-white" 
+                            (click)="measureInfo(measure,measureDetail)">
+                      <i class="fas fa-weight"></i> Info
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -123,3 +146,54 @@
 </ng-template>
 
 <!-- modal end -->
+
+<!-- detail of measure -->
+<ng-template #measureDetail>
+  <div class="modal-header text-center">
+      <p class="modal-title text-info"><i class="fas fa-dot-circle"></i> Measure informations
+          <!-- Nombre de Measures : {{detailMeasures!=null ? detailMeasures.length : '0'}} -->
+      </p>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+
+  <div class="modal-body " >
+      
+    <ul class="list-group mb-3 list-group-item d-flex" >
+          <div class="mb-2">
+            <small class="text-muted"><i class="fas fa-compress-arrows-alt"></i> Pressure:  </small>
+            <span>{{measure.pressure}} Pa</span>
+          </div>
+          <div class="mb-2">
+            <small class="text-muted"><i class="fas fa-temperature-low"></i> Temperature:  </small>
+            <span>{{measure.temperature}} °C</span>
+          </div>
+          <div class="mb-2" >
+            <small class="text-muted"><i class="fas fa-bell"></i> Sensor:  </small>
+            <span>{{measure.sensor.name}}</span>
+          </div>
+          <div class="mb-2" >
+            <small class="text-muted"><i class="fas fa-dot-circle"></i> Tyre:  </small>
+            <span *ngIf="measure.sensor.tyre!=null">{{measure.sensor.tyre.serialNumber}}</span>
+            <span *ngIf="measure.sensor.tyre==null">
+              No Tyre Selected <i class="fas fa-angry"></i>
+            </span>
+          </div>
+          <div class="mb-2">
+            <small class="text-muted"><i class="fas fa-plane"></i> Vehicle:  </small>
+            
+            <ng-container *ngIf="measure.sensor.tyre!=null && 
+            measure.sensor.tyre.mounting!=null &&
+            measure.sensor.tyre.mounting.vehicle!=null; else elseTemplate">
+              {{measure.sensor.tyre.mounting.vehicle.type}}
+            </ng-container>
+            <ng-template #elseTemplate>
+              Vehicle Not Mounted <i class="fas fa-angry"></i>
+            </ng-template>
+          </div>
+      </ul>
+      
+    </div>
+</ng-template>
+<!-- end details of measure -->
