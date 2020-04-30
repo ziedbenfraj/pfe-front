@@ -19,9 +19,11 @@ import { MaxMeasures } from 'src/app/models/maxMeasures/max-measures';
 })
 export class DashboardComponent implements OnInit {
   // for chart
-  public measureName:any=["sensor1", "sensor 2", "sensor 3", "sensor 4", "sensor 5", "sensor 6","sensor 8"];
+  public measureName:any=[];
   public measureTemperature:any=[];
   public measurePressure:any=[];
+
+
 
   // number of sensors
   public numberSensors:number;
@@ -42,46 +44,12 @@ export class DashboardComponent implements OnInit {
   public Temperature;
   public Pressure;
 
+  // latest Measures
+  public LatestMeasures:Measures[];
 
 
-  chart1 = {
-    data :{
-      labels: this.measureName,
-      datasets: [{
-          label: 'temperature',
-          data: this.measureTemperature,
-          backgroundColor: 'transparent',
-          borderColor: '#5b6582',
-          borderWidth: 2
-      },
-      {
-        label: 'pressure',
-        data: this.measurePressure,
-        backgroundColor: 'transparent',
-        borderColor: '#36a2eb',
-        borderWidth: 2
-      }
-    ]
-    },
-    options:{
-      scales: {
-          yAxes: [{
-            ticks: {
-                fontColor: 'rgba(0,0,0,.6)',
-                fontStyle: 'bold',
-                beginAtZero: true,
-                maxTicksLimit: 8,
-                padding: 10
-            }          
-        }]       
-      },
-      responsive: true,
-      legend: {          
-        position:'bottom',
-        display:false
-      },
-    }
-  };
+  chart = [];
+
 
   
 
@@ -90,24 +58,53 @@ export class DashboardComponent implements OnInit {
               private modalService: BsModalService) { }
 
   ngOnInit() {
-    // chart
-    new Chart('chart-line',  {
-      type: 'line',
-      data: this.chart1.data,
-      options: this.chart1.options
-    });
     this.getTyres();
     this.getVehicles();
     this.getMeasures();
     console.log("heyyy");
-    this.myFunc();
-    
-    
- 
-    
+    this.showMap();
   }
   
-  
+  showMap(){
+
+    this.myFunc();
+    new Chart('canvas', {
+      type: 'line',
+      data: {
+        labels: this.measureName,
+        datasets: [
+          {
+            data: this.measurePressure,
+            backgroundColor: 'transparent',
+            borderColor: '#5b6582',
+            borderWidth: 2,
+            label:"Pressure"
+          },
+          {
+            data: this.measureTemperature,
+            backgroundColor: 'transparent',
+            borderColor: '#36a2eb',
+            borderWidth: 2,
+            label:"Temperature"
+      
+          },
+        ]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            display: true
+          }],
+          yAxes: [{
+            display: true
+          }]
+        }
+      }
+    })
+  }
   
 
   // nratb el temp wel pression
@@ -142,8 +139,9 @@ export class DashboardComponent implements OnInit {
       maxMeasures.forEach(value => {
         this.measureTemperature.push(value.maxTemperature);
         this.measurePressure.push(value.maxPressure);
+        this.measureName.push(value.name);
       });
-        // this.measureName.reverse();
+        this.measureName.reverse();
         this.measurePressure.reverse();
         this.measureTemperature.reverse();
         // this.measureTemperature;
@@ -151,16 +149,17 @@ export class DashboardComponent implements OnInit {
 
       console.log(this.measureTemperature);
       console.log(this.measurePressure);
+      console.log(this.measureName);
       
     }, (error) => {
       console.log(error);
     });
     
-    new Chart('chart-line',  {
-      type: 'line',
-      data: this.chart1.data,
-      options: this.chart1.options
-    });
+    // new Chart('chart-line',  {
+    //   type: 'line',
+    //   data: this.chart1.data,
+    //   options: this.chart1.options
+    // });
   }
   // get Measures
   getMeasures(){
@@ -169,7 +168,7 @@ export class DashboardComponent implements OnInit {
       this.numberMeasures=this.measuresList.length;
     }, (error) => {
       console.log(error);
-    })
+    });
   }
   // get sensors methods
   getSensors(){
