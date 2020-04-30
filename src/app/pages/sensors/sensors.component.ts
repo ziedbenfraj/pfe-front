@@ -9,11 +9,14 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Measures } from 'src/app/models/measures/measures';
 
 
+import {MatTableDataSource} from '@angular/material';
+
 @Component({
   selector: 'app-sensors',
   templateUrl: './sensors.component.html',
   styleUrls: ['./sensors.component.scss']
 })
+
 export class SensorsComponent implements OnInit {
 
   public listUser: boolean = true;
@@ -37,6 +40,12 @@ export class SensorsComponent implements OnInit {
   ngOnInit() {
     this.OnGetAllSensors();
   }
+
+
+  
+
+
+
 
 
   //get all sensors

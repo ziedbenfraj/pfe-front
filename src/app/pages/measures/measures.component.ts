@@ -3,7 +3,9 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Measures } from 'src/app/models/measures/measures';
 import { MeasuresService } from 'src/app/services/measures/measures.service';
 import { SensorsService } from 'src/app/services/sensors/sensors.service';
-import {MatTableDataSource} from '@angular/material/table';
+import {MatTableDataSource} from '@angular/material';
+
+
 
 
 @Component({
@@ -12,17 +14,19 @@ import {MatTableDataSource} from '@angular/material/table';
   styleUrls: ['./measures.component.scss']
 })
 export class MeasuresComponent implements OnInit {
-  // filter
-  public ELEMENT_DATA:Measures[];
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+  
   // modal
   modalRef: BsModalRef;
   public operation:string="";
 
   public measure:Measures;
   public measuresObj=new Measures();
-  public measuresList:any;
+
+
+  public measuresList:Measures[];
+  
+
+
 
   // pagination
   public p: number = 1;
@@ -31,10 +35,16 @@ export class MeasuresComponent implements OnInit {
   public sensorList:any;
 
 
+  
+
+
+
+
   constructor(private _measureService:MeasuresService,
     private modalService: BsModalService,private _SensorService:SensorsService) { }
 
   ngOnInit() {
+    
     this.getMeasures();
     this.getSensors();
   }
@@ -43,7 +53,6 @@ export class MeasuresComponent implements OnInit {
   getMeasures(){
     this._measureService.getMeasures().subscribe((sensors)=>{
       this.measuresList=sensors;
-      this.ELEMENT_DATA=this.measuresList;
     }, (error) => {
       console.log(error);
     })
@@ -72,9 +81,7 @@ export class MeasuresComponent implements OnInit {
   }
   processForm(measuresObj) {
     if (this.measuresObj.id == undefined) {
-      console.log('indice 111111 !');
       this._measureService.createMeasure(this.measuresObj).subscribe((measure) => {
-        console.log(measure);
         this.ngOnInit();
       }, (error) => {
         console.log(error);
@@ -82,7 +89,6 @@ export class MeasuresComponent implements OnInit {
       });
     } else {
       this._measureService.updateMeasure(this.measuresObj).subscribe((measure) => {
-        console.log(measure);
         this.ngOnInit();
       }, (error) => {
         console.log(error);
