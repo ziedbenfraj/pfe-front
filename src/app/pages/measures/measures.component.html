@@ -16,10 +16,11 @@
               </button>
           
             <div class="form-group col-md-6  float-right">
-              <select name="sensor" id="sensor" class="form-control" [(ngModel)]="measuresObj.sensor">
-                <option *ngFor="let sensor of sensorList" [ngValue]="sensor">{{ sensor.name }}</option>
-                <option *ngFor="let sensor of sensorList" [ngValue]="sensor">{{ sensor.name }}</option>
-              </select>
+              <input type="text"
+             [(ngModel)]="searchText"
+             class="form-control"
+             style="width: 100%;"
+             placeholder="Search notes...">
             </div>
           <div class="table-responsive">
             <table class="table table-hover table-bordered" >
@@ -33,7 +34,8 @@
                 </tr>
               </thead>
               <tbody class="bg-white text-dark">
-                <tr *ngFor="let measure of measuresList | paginate: { itemsPerPage: 5, currentPage: p }">
+                <tr *ngFor="let measure of measuresList | measuresPipe:searchText
+                | paginate: { itemsPerPage: 5, currentPage: p }">
                   <td>{{measure.pressure}}</td>
                   <td>{{measure.temperature}}</td>
                   <td>{{measure.sensor.name}}</td>

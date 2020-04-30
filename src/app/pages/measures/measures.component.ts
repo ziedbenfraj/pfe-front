@@ -36,7 +36,7 @@ export class MeasuresComponent implements OnInit {
 
 
   
-
+  searchText:string;
 
 
 
