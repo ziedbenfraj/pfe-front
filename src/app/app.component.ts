@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'pressence-control-platform-frontend';
 
-  constructor(private authService:AuthenticationService,private router:Router){};
+  constructor(private authService: AuthenticationService, private router: Router) { };
 
   //load the JWT
   ngOnInit(): void {
@@ -19,23 +19,23 @@ export class AppComponent {
   }
 
   //return true if exist role 
-  isAutheticated(){
+  isAutheticated() {
     return this.authService.isAutheticated();
   }
 
   //verify admin or not
-  isAdmin(){
-    return this.authService.role=="ADMIN";
-    
+  isAdmin() {
+    return this.authService.role == "ADMIN";
+
   }
 
-  isUser(){
-    return this.authService.role=="USER";
+  isUser() {
+    return this.authService.role == "USER";
   }
 
-  userName(){
+  userName() {
     console.log(this.authService.username);
     return this.authService.username;
   }
- 
+
 }

@@ -7,10 +7,10 @@ import { Measures } from 'src/app/models/measures/measures';
 export class MeasuresPipeBySensorPipe implements PipeTransform {
 
   transform(measuresList: Measures[], text: string): Measures[] {
-    if(text == null || text === ""){
+    if (text == null || text === "") {
       return measuresList;
     }
-    return measuresList.filter(n => 
+    return measuresList.filter(n =>
       n.sensor.name.toString().includes(text)
     );
   }

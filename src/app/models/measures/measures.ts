@@ -1,9 +1,9 @@
 import { Sensors } from '../sensors/sensors';
 
 export class Measures {
-    id?:number;
+    id?: number;
     pressure?;
     temperature?;
-    dateOfMeasure?:Date;
-    sensor?:Sensors;
+    dateOfMeasure?: Date;
+    sensor?: Sensors;
 }

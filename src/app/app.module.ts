@@ -4,10 +4,10 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
-import {FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -58,7 +58,7 @@ import { MeasuresPipeByDatePipe } from './pages/measures/measures-pipe-by-date.p
     MeasuresPipePipe,
     MeasuresPipeBySensorPipe,
     MeasuresPipeByDatePipe,
-    
+
   ],
   imports: [
     FormsModule,
@@ -72,7 +72,7 @@ import { MeasuresPipeByDatePipe } from './pages/measures/measures-pipe-by-date.p
     NgxPaginationModule,
     ReactiveFormsModule,
     MaterialsModule
-    ],
+  ],
   providers: [
     RoleService
   ],

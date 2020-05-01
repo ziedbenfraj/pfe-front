@@ -27,30 +27,30 @@ export class TyreService {
     return this._http.get(this.baseUrl, this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
-  };
-
+  }
+  // get Tyre
   getTyre(id: Number) {
     return this._http.get(this.baseUrl + '/' + id, this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
   }
-
+  // delete Tyre
   deleteTyre(id: Number) {
     return this._http.delete(this.baseUrl + '/' + id, this.options)
       .catch(this.errorHandler);
   }
-
+  // create Tyre
   createTyre(tyre: Tyre) {
     return this._http.post(this.baseUrl, JSON.stringify(tyre), this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
   }
-  //update users
+  // update Tyre
   updateTyre(tyre: Tyre) {
     return this._http.put(this.baseUrl, JSON.stringify(tyre), this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
-      
+
   }
 
 

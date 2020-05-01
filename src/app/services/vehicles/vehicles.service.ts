@@ -24,30 +24,30 @@ export class VehiclesService {
 
   }
 
-  //  get all roles
+  //  get all Vehicles
   getVehicles() {
     return this._http.get(this.baseUrl, this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
-  };
-
+  }
+  // get Vehicle
   getVehicle(id: Number) {
     return this._http.get(this.baseUrl + '/' + id, this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
   }
-
+  // delete Vehicle
   deleteVehicle(id: Number) {
     return this._http.delete(this.baseUrl + '/' + id, this.options)
       .catch(this.errorHandler);
   }
-
+  // create Vehicle
   createVehicle(vehicle: Vehicles) {
     return this._http.post(this.baseUrl, JSON.stringify(vehicle), this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
   }
-  //update users
+  // update Vehicle
   updateVehicle(vehicle: Vehicles) {
     console.log(vehicle);
     return this._http.put(this.baseUrl, JSON.stringify(vehicle), this.options)

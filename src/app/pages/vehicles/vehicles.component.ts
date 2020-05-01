@@ -18,23 +18,23 @@ export class VehiclesComponent implements OnInit {
   public listUser: boolean = true;
   public addUpdate: boolean = false;
   public vehicles: Vehicles[];
-  public vehicleObj: Vehicles=new Vehicles();
+  public vehicleObj: Vehicles = new Vehicles();
   // companies
   public companies: Companies[];
-  public tyres:Tyre[];
+  public tyres: Tyre[];
 
   modalRef: BsModalRef;
 
-  public operation:string="";
+  public operation: string = "";
   // constructor
   constructor(private _router: Router, private _authService: AuthenticationService,
     private _CompanieService: CompaniesService,
-    private _VehiclesService: VehiclesService,private modalService: BsModalService) { }
+    private _VehiclesService: VehiclesService, private modalService: BsModalService) { }
 
   //get all departement
   ngOnInit() {
     this.OnGetAllVehicles();
-    
+
   }
 
 
@@ -61,13 +61,13 @@ export class VehiclesComponent implements OnInit {
 
   //delete
   openModal(confirmDelete: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(confirmDelete, {class: 'modal-sm'});
+    this.modalRef = this.modalService.show(confirmDelete, { class: 'modal-sm' });
   }
   confirm(vehicle) {
     this.deleteVehicle(vehicle);
     this.modalRef.hide();
   }
- 
+
   decline(): void {
     this.modalRef.hide();
     this.ngOnInit();
@@ -82,23 +82,23 @@ export class VehiclesComponent implements OnInit {
   }
 
   //update
-  updateVehicle(vehicle,template: TemplateRef<any>) {
-    this.operation="Edit";
-    this.vehicleObj=vehicle;
+  updateVehicle(vehicle, template: TemplateRef<any>) {
+    this.operation = "Edit";
+    this.vehicleObj = vehicle;
     this.onGetCompanies();
     this.modalRef = this.modalService.show(template);
   }
   newVehicle(template: TemplateRef<any>) {
-    this.operation="Add";
+    this.operation = "Add";
     this.onGetCompanies();
     this.modalRef = this.modalService.show(template);
   }
 
-  details(vehicle,vehicleDetail){
+  details(vehicle, vehicleDetail) {
     console.log(vehicle);
-    this.tyres=[];
-    for (var i=0;i<vehicle.mountings.length;i++){
-      if(vehicle.mountings[i].tyre !=null){
+    this.tyres = [];
+    for (var i = 0; i < vehicle.mountings.length; i++) {
+      if (vehicle.mountings[i].tyre != null) {
         this.tyres.push(vehicle.mountings[i].tyre);
       }
     }
@@ -129,12 +129,12 @@ export class VehiclesComponent implements OnInit {
 
 
 
-  closeForm(){
+  closeForm() {
     this.modalRef.hide();
   }
 
   processForm(vehicleObj) {
-    this.vehicleObj=vehicleObj;
+    this.vehicleObj = vehicleObj;
     if (this.vehicleObj.id == undefined) {
       this._VehiclesService.createVehicle(this.vehicleObj).subscribe((vehicle) => {
         console.log(vehicle);

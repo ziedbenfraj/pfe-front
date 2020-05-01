@@ -9,7 +9,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Measures } from 'src/app/models/measures/measures';
 
 
-import {MatTableDataSource} from '@angular/material';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-sensors',
@@ -21,32 +21,25 @@ export class SensorsComponent implements OnInit {
 
   public listUser: boolean = true;
   public addUpdate: boolean = false;
-  public sensors:Sensors[];
-  public sensor:Sensors;
+  public sensors: Sensors[];
+  public sensor: Sensors;
   public sensorObj: Sensors = new Sensors();
 
-  
 
 
-  public detailMeasures:Measures[];
+
+  public detailMeasures: Measures[];
 
 
   modalRef: BsModalRef;
-  public operation:string="";
+  public operation: string = "";
 
   constructor(private _router: Router, private _authService: AuthenticationService,
-    private _SensorService: SensorsService,private _tyreService:TyreService,private modalService: BsModalService) { }
+    private _SensorService: SensorsService, private _tyreService: TyreService, private modalService: BsModalService) { }
 
   ngOnInit() {
     this.OnGetAllSensors();
   }
-
-
-  
-
-
-
-
 
   //get all sensors
   OnGetAllSensors() {
@@ -57,10 +50,10 @@ export class SensorsComponent implements OnInit {
     });
   };
 
- 
+
   //delete
   openModal(confirmDelete: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(confirmDelete, {class: 'modal-sm'});
+    this.modalRef = this.modalService.show(confirmDelete, { class: 'modal-sm' });
   }
   confirm(sensor) {
     this.deleteSensor(sensor);
@@ -72,19 +65,19 @@ export class SensorsComponent implements OnInit {
     this._SensorService.deleteSensor(sensor.id).subscribe(() => {
       this.sensors.splice(this.sensors.indexOf(sensor), 1);
       this.ngOnInit();
-      }, (error) => {
-        console.log(error);
-    }); 
+    }, (error) => {
+      console.log(error);
+    });
   }
   // detail of sensor
-  details(sensor,sensorDetail){
-    this.sensor=sensor;
-    if(sensor.measures!=null){
-      this.detailMeasures=sensor.measures;
-    }else{
-      this.detailMeasures=null;
+  details(sensor, sensorDetail) {
+    this.sensor = sensor;
+    if (sensor.measures != null) {
+      this.detailMeasures = sensor.measures;
+    } else {
+      this.detailMeasures = null;
     }
-    
+
     console.log(this.sensor);
     console.log(this.detailMeasures);
     this.modalRef = this.modalService.show(sensorDetail);
@@ -116,13 +109,13 @@ export class SensorsComponent implements OnInit {
 
 
   //update
-  updateSensor(sensor,template: TemplateRef<any>) {
-    this.operation="Edit";
+  updateSensor(sensor, template: TemplateRef<any>) {
+    this.operation = "Edit";
     this.sensorObj = sensor;
     this.modalRef = this.modalService.show(template);
   }
   newSensor(template: TemplateRef<any>) {
-    this.operation="Add";
+    this.operation = "Add";
     this.modalRef = this.modalService.show(template);
   }
 
@@ -145,7 +138,7 @@ export class SensorsComponent implements OnInit {
 
 
     }
-  
+
   }
 
 

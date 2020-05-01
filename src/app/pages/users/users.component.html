@@ -1,5 +1,5 @@
 <!-- Table of Roles -->
-<div >
+<div>
     <button type="button" class="btn btn-info btn-sm mb-2" (click)="newUser(template)">
         <i class="fas fa-user-plus"></i> New
     </button>
@@ -13,7 +13,7 @@
             <th>departement</th>
             <th>role</th>
 
-            <th >operations</th>
+            <th>operations</th>
         </thead>
         <tbody class="bg-white text-dark">
             <tr *ngFor="let user of users">
@@ -34,12 +34,12 @@
                     <!-- confirmDelete modal -->
                     <ng-template #confirmDelete>
                         <div class="modal-body text-center">
-                        <p>Do you want to confirm?</p>
-                        <button type="button" class="btn btn-success text-white mr-2" (click)="confirm(user)" >
-                            <i class="fas fa-check"></i></button>
-                        <button type="button" class="btn btn-danger text-white" (click)="decline()" >
-                            <i class="fas fa-times"></i>
-                        </button>
+                            <p>Do you want to confirm?</p>
+                            <button type="button" class="btn btn-success text-white mr-2" (click)="confirm(user)">
+                                <i class="fas fa-check"></i></button>
+                            <button type="button" class="btn btn-danger text-white" (click)="decline()">
+                                <i class="fas fa-times"></i>
+                            </button>
                         </div>
                     </ng-template>
                     <!-- end confirmDelete -->
@@ -51,18 +51,18 @@
         </tbody>
     </table>
     <!-- <button class='btn btn-info mr-2 btn-sm' (click)="updateDepartement(departement)">Add new Departement</button> -->
-    
+
 </div>
 
 <!-- modal -->
 <ng-template #template class="col-md-8">
     <div class="modal-header">
-      <h4 class="modal-title pull-left">{{operation}}</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
+        <h4 class="modal-title pull-left">{{operation}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
-    <div class="modal-body " >
+    <div class="modal-body ">
         <form (ngSubmit)="processForm()" #userForm="ngForm">
             <div class="form-row">
                 <!-- first name -->
@@ -71,34 +71,33 @@
                         First Name :
                     </label>
                     <input type="text" name="firstName" placeholder="firstName" class='form-control'
-                        [(ngModel)]="userObj.firstName" #firstName="ngModel" minlength="3" required/>
+                        [(ngModel)]="userObj.firstName" #firstName="ngModel" minlength="3" required />
                 </div>
-                
+
                 <!-- last name -->
                 <div class="form-group col-md-6">
                     <label for="description" class="col-form-label col-form-label-sm customLabel">
                         Last Name :
                     </label>
                     <input type="text" name="lastName" placeholder="lastName" class='form-control'
-                        [(ngModel)]="userObj.lastName" #lastName="ngModel" minlength="3" required/>
+                        [(ngModel)]="userObj.lastName" #lastName="ngModel" minlength="3" required />
                 </div>
             </div>
             <!-- validation of first name -->
             <div *ngIf="(firstName.invalid && (firstName.dirty || firstName.Untouched)) || 
-                        (lastName.invalid && (lastName.dirty || lastName.Untouched))" 
-            class="alert alert-danger">
-                3 characters at least 
+                        (lastName.invalid && (lastName.dirty || lastName.Untouched))" class="alert alert-danger">
+                3 characters at least
             </div>
             <!-- email -->
             <div class="form-group">
                 <label for="description" class="col-form-label col-form-label-sm customLabel">
                     Email :
                 </label>
-                <input type="email" name="email" placeholder="email" class='form-control' [(ngModel)]="userObj.email" 
-                required #email="ngModel" minlength="6" email/>
+                <input type="email" name="email" placeholder="email" class='form-control' [(ngModel)]="userObj.email"
+                    required #email="ngModel" minlength="6" email />
             </div>
             <div *ngIf="email.invalid && (email.dirty || email.Untouched)" class="alert alert-danger">
-                type a valid email 
+                type a valid email
             </div>
             <!-- email end -->
 
@@ -107,8 +106,8 @@
                 <label for="description" class="col-form-label col-form-label-sm customLabel">
                     Address :
                 </label>
-                <input type="text" name="address" placeholder="address" class='form-control' [(ngModel)]="userObj.address"
-                required minlength="4" maxlength="25" />
+                <input type="text" name="address" placeholder="address" class='form-control'
+                    [(ngModel)]="userObj.address" required minlength="4" maxlength="25" />
             </div>
             <!-- adress end  -->
 
@@ -128,7 +127,7 @@
                     Birthday :
                 </label>
                 <input type="date" name="birthDate" placeholder="birthDate" class='form-control'
-                    [(ngModel)]="userObj.birthDate" required  />
+                    [(ngModel)]="userObj.birthDate" required />
             </div>
 
             <div class="form-row">
@@ -138,7 +137,7 @@
                         UserName :
                     </label>
                     <input type="text" name="userName" placeholder="userName" class='form-control'
-                        [(ngModel)]="userObj.userName" required minlength="3" maxlength="10"/>
+                        [(ngModel)]="userObj.userName" required minlength="3" maxlength="10" />
                 </div>
                 <!-- password -->
                 <div class="form-group col-md-6" *ngIf="displayPassword">
@@ -146,9 +145,9 @@
                         password :
                     </label>
                     <input type="password" name="password" placeholder="password" class='form-control'
-                        [(ngModel)]="userObj.password" required minlength="3" maxlength="10"/>
+                        [(ngModel)]="userObj.password" required minlength="3" maxlength="10" />
                 </div>
-            </div>  
+            </div>
 
             <!-- departement -->
             <div class="form-group">
@@ -156,12 +155,12 @@
                     Departement :
                 </label>
                 <select name="departement" id="departement" class="form-control" [(ngModel)]="userObj.departement"
-                required >
-                    
+                    required>
+
                     <option *ngFor="let items of departements" [ngValue]="items" selected>
                         <!-- <ng-container *ngIf="userObj.departement == items ? dzdz : 'ssss'"></ng-container> -->
                         {{ items.name }}
-                        
+
                     </option>
 
                 </select>
@@ -175,93 +174,94 @@
                     <option *ngFor="let item of roles" [ngValue]="item">{{ item.name }}</option>
                 </select>
             </div>
-    
+
             <!-- activated -->
             <div class="form-group">
-                <input type="hidden" name="activated" class="form-control" [(ngModel)]="userObj.activated" value="true" />
+                <input type="hidden" name="activated" class="form-control" [(ngModel)]="userObj.activated"
+                    value="true" />
             </div>
-    
-    
-    
+
+
+
             <!-- <div class="form-group">
                 <input type="submit" class='btn-sm btn btn-primary' value="Save" />
             </div> -->
-            <button type="submit" class='btn-sm btn btn-primary' [disabled]="userForm.form.invalid" >Save</button>
+            <button type="submit" class='btn-sm btn btn-primary' [disabled]="userForm.form.invalid">Save</button>
         </form>
-        <button   class='fix-cancel btn-sm btn btn-danger' (click)="modalRef.hide()">close</button>
+        <button class='fix-cancel btn-sm btn btn-danger' (click)="modalRef.hide()">close</button>
     </div>
-  </ng-template>
+</ng-template>
 
-  <!-- modal end -->
+<!-- modal end -->
 
 
-  <!-- user Details -->
-  <ng-template #userDetail>
+<!-- user Details -->
+<ng-template #userDetail>
     <div class="modal-header">
         <h4 class="modal-title pull-left">Detail </h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-          <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body text-center">
         <ul class="list-group mb-3">
             <li class="list-group-item d-flex  ">
-              <div>
-                <small class="text-muted">first Name:  </small>
-                <span>{{user.firstName}}</span>
-              </div>
+                <div>
+                    <small class="text-muted">first Name: </small>
+                    <span>{{user.firstName}}</span>
+                </div>
             </li>
             <li class="list-group-item d-flex  ">
                 <div>
-                  <small class="text-muted">last Name:  </small>
-                  <span>{{user.lastName}}</span>
+                    <small class="text-muted">last Name: </small>
+                    <span>{{user.lastName}}</span>
                 </div>
-              </li>
-              <li class="list-group-item d-flex  ">
+            </li>
+            <li class="list-group-item d-flex  ">
                 <div>
-                  <small class="text-muted">email:  </small>
-                  <span>{{user.email}}</span>
+                    <small class="text-muted">email: </small>
+                    <span>{{user.email}}</span>
                 </div>
-              </li>
-              <li class="list-group-item d-flex  ">
+            </li>
+            <li class="list-group-item d-flex  ">
                 <div>
-                  <small class="text-muted">address:  </small>
-                  <span>{{user.address}}</span>
+                    <small class="text-muted">address: </small>
+                    <span>{{user.address}}</span>
                 </div>
-              </li>
-              <li class="list-group-item d-flex  ">
+            </li>
+            <li class="list-group-item d-flex  ">
                 <div>
-                  <small class="text-muted">phone Number:  </small>
-                  <span>{{user.phoneNumber}}</span>
+                    <small class="text-muted">phone Number: </small>
+                    <span>{{user.phoneNumber}}</span>
                 </div>
-              </li>
-              <li class="list-group-item d-flex  ">
+            </li>
+            <li class="list-group-item d-flex  ">
                 <div>
-                  <small class="text-muted">birthDate:  </small>
-                  <span>{{user.birthDate}}</span>
+                    <small class="text-muted">birthDate: </small>
+                    <span>{{user.birthDate}}</span>
                 </div>
-              </li>
-              <li class="list-group-item d-flex  ">
+            </li>
+            <li class="list-group-item d-flex  ">
                 <div>
-                  <small class="text-muted">userName:  </small>
-                  <span>{{user.userName}}</span>
+                    <small class="text-muted">userName: </small>
+                    <span>{{user.userName}}</span>
                 </div>
-              </li>
-              <li class="list-group-item d-flex  ">
+            </li>
+            <li class="list-group-item d-flex  ">
                 <div>
-                  <small class="text-muted">departement:  </small>
-                  <span>{{user.departement.name}}</span>
+                    <small class="text-muted">departement: </small>
+                    <span>{{user.departement.name}}</span>
                 </div>
-              </li>
-              <li class="list-group-item d-flex  ">
+            </li>
+            <li class="list-group-item d-flex  ">
                 <div>
-                  <small class="text-muted">role:  </small>
-                  <span>{{user.role.name}}</span>
+                    <small class="text-muted">role: </small>
+                    <span>{{user.role.name}}</span>
                 </div>
-              </li>
-              
-          </ul>
-    
+            </li>
+
+        </ul>
+
     </div>
 </ng-template>
 <!-- usr details end -->

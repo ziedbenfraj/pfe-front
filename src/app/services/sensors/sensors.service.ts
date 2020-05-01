@@ -22,30 +22,30 @@ export class SensorsService {
 
   }
 
-  //  get all roles
+  //  get all Sensors
   getSensors() {
     return this._http.get(this.baseUrl, this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
-  };
-
+  }
+  // get 1 Sensor
   getSensor(id: Number) {
     return this._http.get(this.baseUrl + '/' + id, this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
   }
-
+  // delete Sensor
   deleteSensor(id: Number) {
     return this._http.delete(this.baseUrl + '/' + id, this.options)
       .catch(this.errorHandler);
   }
-
+  // create Sensor
   createSensor(sensor: Sensors) {
     return this._http.post(this.baseUrl, JSON.stringify(sensor), this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
   }
-  //update users
+  // update Sensor
   updateSensor(sensor: Sensors) {
     console.log(sensor);
     return this._http.put(this.baseUrl, JSON.stringify(sensor), this.options)

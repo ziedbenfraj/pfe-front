@@ -1,4 +1,4 @@
-<div >
+<div>
     <button type="button" class="btn btn-info btn-sm mb-2" (click)="newDepartement(template)">
         <i class="fas fa-plus-square"></i> Create
     </button>
@@ -27,12 +27,13 @@
                     <!-- confirmDelete modal -->
                     <ng-template #confirmDelete>
                         <div class="modal-body text-center">
-                        <p>Do you want to confirm?</p>
-                        <button type="button" class="btn btn-success text-white mr-2" (click)="confirm(departement)" >
-                            <i class="fas fa-check"></i></button>
-                        <button type="button" class="btn btn-danger text-white" (click)="decline()" >
-                            <i class="fas fa-times"></i>
-                        </button>
+                            <p>Do you want to confirm?</p>
+                            <button type="button" class="btn btn-success text-white mr-2"
+                                (click)="confirm(departement)">
+                                <i class="fas fa-check"></i></button>
+                            <button type="button" class="btn btn-danger text-white" (click)="decline()">
+                                <i class="fas fa-times"></i>
+                            </button>
                         </div>
                     </ng-template>
                     <!-- end confirmDelete -->
@@ -41,7 +42,7 @@
         </tbody>
     </table>
     <!-- <button class='btn btn-info mr-2 btn-sm' (click)="updateDepartement(departement)">Add new Departement</button> -->
-    
+
 </div>
 <!-- <button type="button" class="btn btn-primary" (click)="newDepartement(template)">Create template modal</button> -->
 
@@ -50,18 +51,18 @@
 <!-- modal -->
 <ng-template #template>
     <div class="modal-header">
-      <h4 class="modal-title pull-left">{{operation}}</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
+        <h4 class="modal-title pull-left">{{operation}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     <div class="modal-body">
         <form (ngSubmit)="processForm(departement)" #departementForm="ngForm">
             <!-- name -->
             <div class="form-group">
                 <label for="name" class="col-form-label col-form-label-sm customLabel">Name Of Departement :</label>
-                <input type="text" id="name" name="name" placeholder="name" class='form-control' [(ngModel)]="departement.name"
-                    #name="ngModel" minlength="4" required />
+                <input type="text" id="name" name="name" placeholder="name" class='form-control'
+                    [(ngModel)]="departement.name" #name="ngModel" minlength="4" required />
             </div>
             <div *ngIf="name.Untouched || (name.invalid && (name.dirty || name.Untouched))" class="alert alert-danger">
                 <div *ngIf="name.errors.required">
@@ -72,7 +73,7 @@
                 </div>
             </div>
             <!-- name end  -->
-            
+
             <!-- description -->
             <div class="form-group">
                 <label for="description" class="col-form-label col-form-label-sm customLabel">Description :</label>
@@ -88,16 +89,12 @@
                 </div>
             </div>
             <!-- description end -->
-            
-            
-            <button type="submit" class='btn-sm btn btn-primary' [disabled]="departementForm.form.invalid" >Save</button>
+
+
+            <button type="submit" class='btn-sm btn btn-primary' [disabled]="departementForm.form.invalid">Save</button>
         </form>
         <button class=' btn-sm btn btn-danger fix-cancel' (click)="decline()">close</button>
     </div>
-  </ng-template>
+</ng-template>
 
-  <!-- modal end -->
-
-
-
-
+<!-- modal end -->

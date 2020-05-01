@@ -19,11 +19,11 @@ export class UsersComponent implements OnInit {
 
   // modal
   modalRef: BsModalRef;
-  public operation:string="";
+  public operation: string = "";
   public users: User[];
-  public user:User;
-  public userObj: User=new User();
-  public displayPassword:boolean=true;
+  public user: User;
+  public userObj: User = new User();
+  public displayPassword: boolean = true;
   // role
   public roles: Role[];
   // departement
@@ -44,7 +44,7 @@ export class UsersComponent implements OnInit {
   }
 
   // close function 
-  closeForm(){
+  closeForm() {
     this.modalRef.hide();
   }
 
@@ -87,23 +87,23 @@ export class UsersComponent implements OnInit {
   }
 
   //update
-  updateDepartement(user,template: TemplateRef<any>) {
+  updateDepartement(user, template: TemplateRef<any>) {
     // localStorage.setItem("update",departement)
     // this._depService.setter(departement);
-    this.displayPassword=false;
+    this.displayPassword = false;
     console.log(user);
     this.userObj = user;
     this.onGetRole();
     this.onGetDepartement();
-    this.operation="Edit User";
-    this.modalRef = this.modalService.show(template);  
+    this.operation = "Edit User";
+    this.modalRef = this.modalService.show(template);
   }
   newUser(template: TemplateRef<any>) {
-    this.displayPassword=true;
-    this.operation="Add new User";
+    this.displayPassword = true;
+    this.operation = "Add new User";
     this.onGetRole();
     this.onGetDepartement();
-    this.modalRef = this.modalService.show(template);  
+    this.modalRef = this.modalService.show(template);
   }
 
 
@@ -153,32 +153,32 @@ export class UsersComponent implements OnInit {
         console.log(error);
       });
 
-      
+
     }
-    
+
     this.closeForm();
     this.ngOnInit();
   }
 
   // confrim Delete MODAL
   deleteReq(confirmDelete: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(confirmDelete, {class: 'modal-sm'});
+    this.modalRef = this.modalService.show(confirmDelete, { class: 'modal-sm' });
   }
   confirm(user) {
-    this.user=user;
+    this.user = user;
     this.deleteUsers(user);
     this.modalRef.hide();
   }
- 
+
   decline(): void {
     this.modalRef.hide();
   }
   // delete end
 
   // user details
-  details(user,userDetail: TemplateRef<any>){
-    this.user=user;
-    this.modalRef = this.modalService.show(userDetail, {class: 'modal-sm'});
+  details(user, userDetail: TemplateRef<any>) {
+    this.user = user;
+    this.modalRef = this.modalService.show(userDetail, { class: 'modal-sm' });
   }
 
 }

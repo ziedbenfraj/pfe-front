@@ -1,217 +1,217 @@
 <!-- Table of Roles -->
-<div >
-    <button type="button" class="btn btn-info btn-sm mb-2" (click)="newTyre(template)">
-        <i class="fas fa-plus-square"></i> New
-    </button>
+<div>
+  <button type="button" class="btn btn-info btn-sm mb-2" (click)="newTyre(template)">
+    <i class="fas fa-plus-square"></i> New
+  </button>
   <table class="table table-hover table-bordered col-md-12">
-      <thead class="bg-dark text-white">
-          <th>Id</th>
-          <th>Serial Number</th>
-          <th>Code</th>
-          <th>Description</th>
-          <th>BrandName</th>
-          <th>Vehicle type</th>
+    <thead class="bg-dark text-white">
+      <th>Id</th>
+      <th>Serial Number</th>
+      <th>Code</th>
+      <th>Description</th>
+      <th>BrandName</th>
+      <th>Vehicle type</th>
 
-          <th>operations</th>
-      </thead>
-      <tbody class="bg-white text-dark">
-          <tr *ngFor="let tyre of tyres">
-              <td>{{tyre.id}}</td>
-              <td>{{tyre.serialNumber}}</td>
-              <td>{{tyre.productCode}}</td>
-              <td>{{tyre.productDescription}}</td>
-              <td>{{tyre.brandName}}</td>
-              <td >
-                  {{tyre.mounting!=null&&tyre.mounting.vehicle!=null ? tyre.mounting.vehicle.type : "NOT MOUNT"}}
-            </td>
+      <th>operations</th>
+    </thead>
+    <tbody class="bg-white text-dark">
+      <tr *ngFor="let tyre of tyres">
+        <td>{{tyre.id}}</td>
+        <td>{{tyre.serialNumber}}</td>
+        <td>{{tyre.productCode}}</td>
+        <td>{{tyre.productDescription}}</td>
+        <td>{{tyre.brandName}}</td>
+        <td>
+          {{tyre.mounting!=null&&tyre.mounting.vehicle!=null ? tyre.mounting.vehicle.type : "NOT MOUNT"}}
+        </td>
 
 
-              <td>
-                <button class='btn btn-success mr-2 btn-sm' (click)="updateTyre(tyre,template)">
-                  <i class="fas fa-edit"></i> Edit
-                </button>
-                <button class='btn btn-danger mr-2 btn-sm' (click)="openModal(confirmDelete)">
-                  <i class="fas fa-trash-alt"></i> Delete
-                </button>
-                 <!-- confirmDelete modal -->
-                 <ng-template #confirmDelete>
-                    <div class="modal-body text-center">
-                      <p>Do you want to confirm?</p>
-                      <button type="button" class="btn btn-success text-white mr-2" (click)="confirm(tyre)" >
-                          <i class="fas fa-check"></i></button>
-                      <button type="button" class="btn btn-danger text-white" (click)="decline()" >
-                          <i class="fas fa-times"></i>
-                      </button>
-                    </div>
-                  </ng-template>
-                  <!-- end confirmDelete -->
-                  <button class="btn btn-info btn-sm" (click)="details(tyre,tyreDetail)">
-                    <i class="fas fa-dot-circle"></i> info
-                  </button>
-                  
+        <td>
+          <button class='btn btn-success mr-2 btn-sm' (click)="updateTyre(tyre,template)">
+            <i class="fas fa-edit"></i> Edit
+          </button>
+          <button class='btn btn-danger mr-2 btn-sm' (click)="openModal(confirmDelete)">
+            <i class="fas fa-trash-alt"></i> Delete
+          </button>
+          <!-- confirmDelete modal -->
+          <ng-template #confirmDelete>
+            <div class="modal-body text-center">
+              <p>Do you want to confirm?</p>
+              <button type="button" class="btn btn-success text-white mr-2" (click)="confirm(tyre)">
+                <i class="fas fa-check"></i></button>
+              <button type="button" class="btn btn-danger text-white" (click)="decline()">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </ng-template>
+          <!-- end confirmDelete -->
+          <button class="btn btn-info btn-sm" (click)="details(tyre,tyreDetail)">
+            <i class="fas fa-dot-circle"></i> info
+          </button>
 
-              </td>
-          </tr>
-      </tbody>
+
+        </td>
+      </tr>
+    </tbody>
   </table>
 </div>
 
 <!-- modal -->
 <ng-template #template>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">{{operation}} tyre</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-        <form (ngSubmit)="processForm(tyreObj)" #tyreForm="ngForm">
-            <!-- serialNumber -->
-            <div class="form-group">
-                <label for="serialNumber" class="col-form-label col-form-label-sm customLabel">
-                    serial Number :
-                  </label>
-                <input type="text" id="serialNumber" name="serialNumber" placeholder="serialNumber" class='form-control'
-                    [(ngModel)]="tyreObj.serialNumber" required minlength="3"/>
-            </div>
-        
-            <!-- productCode -->
-            <div class="form-group">
-                <label for="productCode" class="col-form-label col-form-label-sm customLabel">
-                    product Code:
-                  </label>
-              <input type="text" id="productCode" name="productCode" placeholder="productCode" class='form-control'
-                  [(ngModel)]="tyreObj.productCode" required minlength="3"/>
-            </div>
-        
-           <!-- productDescription -->
-           <div class="form-group">
-            <label for="productDescription" class="col-form-label col-form-label-sm customLabel">
-                product Description:
-              </label>
-            <input type="text" id="productDescription" name="productDescription" placeholder="productDescription" class='form-control'
-                [(ngModel)]="tyreObj.productDescription" required minlength="3"/>
-            </div>
-            <!-- brandName -->
-           <div class="form-group">
-            <label for="brandName" class="col-form-label col-form-label-sm customLabel">
-                brand Name :
-              </label>
-            <input type="text" id="brandName" name="brandName" placeholder="brandName" class='form-control'
-                [(ngModel)]="tyreObj.brandName" required minlength="3"/>
-            </div>
-        
-            <!-- sensors -->
-            <div class="form-group">
-                <label for="brandName" class="col-form-label col-form-label-sm customLabel">
-                    choose sensor :
-                </label>
-            <select name="sensor" id="sensor" class="form-control" [(ngModel)]="tyreObj.sensor">
-                <option [ngValue]="null" >No sensor</option>
-                <option *ngFor="let items of sensors" [ngValue]="items" >
-                    {{ items.name  }}
-                </option>
-            </select>
-            </div>
-            <div *ngIf="sensors.length==0" class="alert alert-danger">
-                No sensor available 
-            </div>
-            <!-- mounting -->
-            <div class="form-group">
-                <label for="vehicle" class="col-form-label col-form-label-sm customLabel">
-                    choose vehicle :
-                </label>
-                <select name="vehicle" class="form-control" [(ngModel)]="vehicleSelected" >
-                    <option [ngValue]="" >No Vehicle</option>
-                    <option *ngFor="let item of vehicles" [ngValue]="item" >
-                        {{ item.type  }}
-                    </option>
-                </select>
-            </div>
-            <div class="form-group">
-                <input type="submit" class='btn-sm btn btn-primary' value="Save" [disabled]="tyreForm.form.invalid"/>
-            </div>
-        
-          </form>
-      <button class=' btn-sm btn btn-danger fix-cancel' (click)="decline()" >close</button>
-    </div>
-  </ng-template>
-  
-  <!-- modal end -->
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{operation}} tyre</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="processForm(tyreObj)" #tyreForm="ngForm">
+      <!-- serialNumber -->
+      <div class="form-group">
+        <label for="serialNumber" class="col-form-label col-form-label-sm customLabel">
+          serial Number :
+        </label>
+        <input type="text" id="serialNumber" name="serialNumber" placeholder="serialNumber" class='form-control'
+          [(ngModel)]="tyreObj.serialNumber" required minlength="3" />
+      </div>
 
-  <!-- detail of tyres -->
-  <ng-template #tyreDetail>
-    <div class="modal-header text-center">
-        <p class="modal-title text-info"><i class="fas fa-dot-circle"></i> Tyre informations
-            <!-- Nombre de Measures : {{detailMeasures!=null ? detailMeasures.length : '0'}} -->
-        </p>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      <!-- productCode -->
+      <div class="form-group">
+        <label for="productCode" class="col-form-label col-form-label-sm customLabel">
+          product Code:
+        </label>
+        <input type="text" id="productCode" name="productCode" placeholder="productCode" class='form-control'
+          [(ngModel)]="tyreObj.productCode" required minlength="3" />
+      </div>
+
+      <!-- productDescription -->
+      <div class="form-group">
+        <label for="productDescription" class="col-form-label col-form-label-sm customLabel">
+          product Description:
+        </label>
+        <input type="text" id="productDescription" name="productDescription" placeholder="productDescription"
+          class='form-control' [(ngModel)]="tyreObj.productDescription" required minlength="3" />
+      </div>
+      <!-- brandName -->
+      <div class="form-group">
+        <label for="brandName" class="col-form-label col-form-label-sm customLabel">
+          brand Name :
+        </label>
+        <input type="text" id="brandName" name="brandName" placeholder="brandName" class='form-control'
+          [(ngModel)]="tyreObj.brandName" required minlength="3" />
+      </div>
+
+      <!-- sensors -->
+      <div class="form-group">
+        <label for="brandName" class="col-form-label col-form-label-sm customLabel">
+          choose sensor :
+        </label>
+        <select name="sensor" id="sensor" class="form-control" [(ngModel)]="tyreObj.sensor">
+          <option [ngValue]="null">No sensor</option>
+          <option *ngFor="let items of sensors" [ngValue]="items">
+            {{ items.name  }}
+          </option>
+        </select>
+      </div>
+      <div *ngIf="sensors.length==0" class="alert alert-danger">
+        No sensor available
+      </div>
+      <!-- mounting -->
+      <div class="form-group">
+        <label for="vehicle" class="col-form-label col-form-label-sm customLabel">
+          choose vehicle :
+        </label>
+        <select name="vehicle" class="form-control" [(ngModel)]="vehicleSelected">
+          <option [ngValue]="">No Vehicle</option>
+          <option *ngFor="let item of vehicles" [ngValue]="item">
+            {{ item.type  }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <input type="submit" class='btn-sm btn btn-primary' value="Save" [disabled]="tyreForm.form.invalid" />
+      </div>
+
+    </form>
+    <button class=' btn-sm btn btn-danger fix-cancel' (click)="decline()">close</button>
+  </div>
+</ng-template>
+
+<!-- modal end -->
+
+<!-- detail of tyres -->
+<ng-template #tyreDetail>
+  <div class="modal-header text-center">
+    <p class="modal-title text-info"><i class="fas fa-dot-circle"></i> Tyre informations
+      <!-- Nombre de Measures : {{detailMeasures!=null ? detailMeasures.length : '0'}} -->
+    </p>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body ">
+
+    <div>
+      <small class="text-muted">serialNumber: </small>
+      <span>{{tyre.serialNumber}}</span>
     </div>
-    <div class="modal-body ">
-        
-          <div >
-            <small class="text-muted">serialNumber:  </small>
-            <span>{{tyre.serialNumber}}</span>
-          </div>
-          <div>
-            <small class="text-muted">productDescription:  </small>
-            <span>{{tyre.productDescription}}</span>
-          </div>
-          <div>
-            <small class="text-muted">brandName:  </small>
-            <span>{{tyre.brandName}}</span>
-          </div>
-          <div>
-            <small class="text-muted">productCode:  </small>
-            <span>{{tyre.productCode}}</span>
-          </div>
-          <hr>
-          <p class="text-success">
-            <i class="fas fa-bell"></i> Sensor Details 
-          </p>
-          <div>
-            <span  *ngIf="detailMeasures==null">No Sensor Mounted <i class="fas fa-frown"></i></span>
-        </div>
-          <div *ngIf="detailMeasures!=null">
-            <div>
-                <small class="text-muted">name:  </small>
-                <span>{{tyre.sensor.name}}</span>
-            </div>
-            <div>
-                <small class="text-muted">serialNumber:  </small>
-                <span>{{tyre.sensor.serialNumber}}</span>
-            </div>
-            <div>
-                <small class="text-muted">description:  </small>
-                <span>{{tyre.sensor.description}}</span>
-            </div>
-          </div>
-          <button type="button" class="btn btn-info btn-sm mt-2 mb-2" (click)="showMeasures()">
-              <i class="fas fa-weight" ></i> Measures History
-            </button>
-          <!-- Measures details -->
-          <div class="table-responsive-md" *ngIf="showMeasure">
-            <div class="table-responsive">
-              <table class="table table-hover table-bordered">
-                <thead class="bg-dark text-white">
-                  <tr>
-                    <th >pressure</th>
-                    <th >temperature</th>
-                    <th >dateOfMeasure</th>
-                  </tr>
-                </thead>
-                <tbody class="bg-white text-dark">
-                  <tr *ngFor="let measure of detailMeasures">
-                    <td>{{measure.pressure}}</td>
-                    <td>{{measure.temperature}}</td>
-                    <td class="text-info">{{measure.dateOfMeasure}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+    <div>
+      <small class="text-muted">productDescription: </small>
+      <span>{{tyre.productDescription}}</span>
     </div>
-  </ng-template>
-  <!-- end details of tyre -->
+    <div>
+      <small class="text-muted">brandName: </small>
+      <span>{{tyre.brandName}}</span>
+    </div>
+    <div>
+      <small class="text-muted">productCode: </small>
+      <span>{{tyre.productCode}}</span>
+    </div>
+    <hr>
+    <p class="text-success">
+      <i class="fas fa-bell"></i> Sensor Details
+    </p>
+    <div>
+      <span *ngIf="detailMeasures==null">No Sensor Mounted <i class="fas fa-frown"></i></span>
+    </div>
+    <div *ngIf="detailMeasures!=null">
+      <div>
+        <small class="text-muted">name: </small>
+        <span>{{tyre.sensor.name}}</span>
+      </div>
+      <div>
+        <small class="text-muted">serialNumber: </small>
+        <span>{{tyre.sensor.serialNumber}}</span>
+      </div>
+      <div>
+        <small class="text-muted">description: </small>
+        <span>{{tyre.sensor.description}}</span>
+      </div>
+    </div>
+    <button type="button" class="btn btn-info btn-sm mt-2 mb-2" (click)="showMeasures()">
+      <i class="fas fa-weight"></i> Measures History
+    </button>
+    <!-- Measures details -->
+    <div class="table-responsive-md" *ngIf="showMeasure">
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead class="bg-dark text-white">
+            <tr>
+              <th>pressure</th>
+              <th>temperature</th>
+              <th>dateOfMeasure</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white text-dark">
+            <tr *ngFor="let measure of detailMeasures">
+              <td>{{measure.pressure}}</td>
+              <td>{{measure.temperature}}</td>
+              <td class="text-info">{{measure.dateOfMeasure}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- end details of tyre -->

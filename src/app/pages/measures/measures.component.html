@@ -3,51 +3,49 @@
   <div class="col-12 col-xl-12 mb-4 align-items-stretch">
     <div class="card h-100 border-0 rounded-0">
       <div class="card-title mb-1 p-3 d-flex" style="min-height: 70px;">
-        <h6 >Measures</h6>
-        
-        <a class="btn ml-auto p-0 text-lightning " 
-          style="position: absolute;right: 20px;top:24px" (click)="displayFilter()"> 
+        <h6>Measures</h6>
+
+        <a class="btn ml-auto p-0 text-lightning " style="position: absolute;right: 20px;top:24px"
+          (click)="displayFilter()">
           <i class="fas fa-search"></i>
         </a>
         <!-- filter -->
         <!-- style="margin-top: 30px;position: absolute;right: 20px;margin-bottom: 10px;"> -->
-        <div class="form-group  row float-right" 
-              style="position: absolute;right: 50px;" *ngIf="showFilter">
+        <div class="form-group  row float-right" style="position: absolute;right: 50px;" *ngIf="showFilter">
 
           <div class="col-md-4 float-right">
-            <select   class="form-control col-md-12 float-right" [(ngModel)]="sensorName" >
+            <select class="form-control col-md-12 float-right" [(ngModel)]="sensorName">
               <option [ngValue]="null" selected="selected">All Sensors</option>
               <option *ngFor="let sensor of sensorList" [ngValue]="sensor.name">{{ sensor.name }}</option>
             </select>
           </div>
           <div class="col-md-4 float-right">
-            <input type="date" [(ngModel)]="searchDate" class="form-control" style="width: 100%;"
-              >
+            <input type="date" [(ngModel)]="searchDate" class="form-control" style="width: 100%;">
           </div>
           <div class="col-md-4 float-right">
-              <input type="text" [(ngModel)]="searchText" class="form-control" style="width: 100%;"
+            <input type="text" [(ngModel)]="searchText" class="form-control" style="width: 100%;"
               placeholder="Search measure...">
-            </div>
-          
+          </div>
+
         </div>
         <!-- filter end here -->
 
       </div>
       <div class="card-body">
         <div class="table-responsive-md">
-              <button type="button" class="btn btn-info btn-sm mb-2 " (click)="newMeasures(template)">
-                <i class="fas fa-plus-square"></i> Create
-              </button>
-            
-            
+          <button type="button" class="btn btn-info btn-sm mb-2 " (click)="newMeasures(template)">
+            <i class="fas fa-plus-square"></i> Create
+          </button>
+
+
           <div class="table-responsive">
-            <table class="table table-hover table-bordered text-center" >
-              <thead class="bg-dark text-white" >
-                <tr >
+            <table class="table table-hover table-bordered text-center">
+              <thead class="bg-dark text-white">
+                <tr>
                   <th matColumnDef="pressure">pressure</th>
-                  <th >temperature</th>
-                  <th >sensor Name</th>
-                  <th >dateOfMeasure</th>
+                  <th>temperature</th>
+                  <th>sensor Name</th>
+                  <th>dateOfMeasure</th>
                   <th>Controls</th>
                 </tr>
               </thead>
@@ -61,7 +59,7 @@
                   <td class="text-info">{{measure.dateOfMeasure}}</td>
                   <td>
                     <button class='btn btn-success mr-2 btn-sm' (click)="updateMeasures(measure,template)">
-                      <i class="fas fa-edit"></i> Edit 
+                      <i class="fas fa-edit"></i> Edit
                     </button>
                     <!-- <button class='btn btn-danger mr-2 btn-sm' (click)="deleteDepartement(departement)">Delete</button> -->
                     <button class='btn btn-danger mr-2 btn-sm' (click)="openModal(confirmDelete)">
@@ -69,25 +67,24 @@
                     </button>
                     <!-- confirmDelete modal -->
                     <ng-template #confirmDelete>
-                        <div class="modal-body text-center">
+                      <div class="modal-body text-center">
                         <p>Do you want to confirm?</p>
-                        <button type="button" class="btn btn-success text-white mr-2" (click)="confirm(measure)" >
-                            <i class="fas fa-check"></i></button>
-                        <button type="button" class="btn btn-danger text-white" (click)="decline()" >
-                            <i class="fas fa-times"></i>
+                        <button type="button" class="btn btn-success text-white mr-2" (click)="confirm(measure)">
+                          <i class="fas fa-check"></i></button>
+                        <button type="button" class="btn btn-danger text-white" (click)="decline()">
+                          <i class="fas fa-times"></i>
                         </button>
-                        </div>
+                      </div>
                     </ng-template>
                     <!-- end confirmDelete -->
-                    <button type="button" class="btn btn-info text-white" 
-                            (click)="measureInfo(measure,measureDetail)">
+                    <button type="button" class="btn btn-info text-white" (click)="measureInfo(measure,measureDetail)">
                       <i class="fas fa-weight"></i> Info
                     </button>
                   </td>
                 </tr>
               </tbody>
             </table>
-            
+
           </div>
           <pagination-controls class="text-center" (pageChange)="p = $event"></pagination-controls>
         </div>
@@ -107,41 +104,41 @@
     </button>
   </div>
   <div class="modal-body">
-      <form (ngSubmit)="processForm(measuresObj)" #measureForm="ngForm">
-          <div class="form-group">
-            <label for="pressure" class="col-form-label col-form-label-sm customLabel">
-              pressure :
-            </label>
-              <input id="pressure" type="number" name="pressure" placeholder="pressure" 
-              class='form-control' [(ngModel)]="measuresObj.pressure" required/>
-          </div>
-  
-          <div class="form-group">
-            <label for="temperature" class="col-form-label col-form-label-sm customLabel">
-              temperature :
-            </label>
-              <input type="number" id="temperature" name="temperature" placeholder="temperature" class='form-control'
-                  [(ngModel)]="measuresObj.temperature" required/>
-          </div>
+    <form (ngSubmit)="processForm(measuresObj)" #measureForm="ngForm">
+      <div class="form-group">
+        <label for="pressure" class="col-form-label col-form-label-sm customLabel">
+          pressure :
+        </label>
+        <input id="pressure" type="number" name="pressure" placeholder="pressure" class='form-control'
+          [(ngModel)]="measuresObj.pressure" required />
+      </div>
 
-          <!-- sensor -->
-          <div class="form-group">
-            <label for="sensor" class="col-form-label col-form-label-sm customLabel">
-              sensor :
-            </label>
-            <select name="sensor" id="sensor" class="form-control" [(ngModel)]="measuresObj.sensor" required>
-                <option *ngFor="let sensor of sensorList" [ngValue]="sensor">{{ sensor.name }}</option>
-            </select>
-          </div>
-  
-  
-          
-              <button type="submit" class='btn-sm btn btn-primary'  [disabled]="measureForm.form.invalid">Save</button>
-              
-          
-  
-      </form>
-      <button class=' btn-sm btn btn-danger fix-cancel' (click)="closeForm()">close</button>
+      <div class="form-group">
+        <label for="temperature" class="col-form-label col-form-label-sm customLabel">
+          temperature :
+        </label>
+        <input type="number" id="temperature" name="temperature" placeholder="temperature" class='form-control'
+          [(ngModel)]="measuresObj.temperature" required />
+      </div>
+
+      <!-- sensor -->
+      <div class="form-group">
+        <label for="sensor" class="col-form-label col-form-label-sm customLabel">
+          sensor :
+        </label>
+        <select name="sensor" id="sensor" class="form-control" [(ngModel)]="measuresObj.sensor" required>
+          <option *ngFor="let sensor of sensorList" [ngValue]="sensor">{{ sensor.name }}</option>
+        </select>
+      </div>
+
+
+
+      <button type="submit" class='btn-sm btn btn-primary' [disabled]="measureForm.form.invalid">Save</button>
+
+
+
+    </form>
+    <button class=' btn-sm btn btn-danger fix-cancel' (click)="closeForm()">close</button>
   </div>
 </ng-template>
 
@@ -150,54 +147,54 @@
 <!-- detail of measure -->
 <ng-template #measureDetail>
   <div class="modal-header text-center">
-      <p class="modal-title text-info"><i class="fas fa-dot-circle"></i> Measure informations
-          <!-- Nombre de Measures : {{detailMeasures!=null ? detailMeasures.length : '0'}} -->
-      </p>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
+    <p class="modal-title text-info"><i class="fas fa-dot-circle"></i> Measure informations
+      <!-- Nombre de Measures : {{detailMeasures!=null ? detailMeasures.length : '0'}} -->
+    </p>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 
-  <div class="modal-body " >
-      
-    <ul class="list-group mb-3 list-group-item d-flex" >
-          <div class="mb-2">
-            <small class="text-muted"><i class="fas fa-compress-arrows-alt"></i> Pressure:  </small>
-            <span>{{measure.pressure}} Pa</span>
-          </div>
-          <div class="mb-2">
-            <small class="text-muted"><i class="fas fa-temperature-low"></i> Temperature:  </small>
-            <span>{{measure.temperature}} °C</span>
-          </div>
-          <div class="mb-2">
-            <small class="text-muted"><i class="fas fa-clock"></i> dateOfMeasure:  </small>
-            <span class="text-info">{{measure.dateOfMeasure}}</span>
-          </div>
-          <div class="mb-2" >
-            <small class="text-muted"><i class="fas fa-bell"></i> Sensor:  </small>
-            <span>{{measure.sensor.name}}</span>
-          </div>
-          <div class="mb-2" >
-            <small class="text-muted"><i class="fas fa-dot-circle"></i> Tyre:  </small>
-            <span *ngIf="measure.sensor.tyre!=null">{{measure.sensor.tyre.serialNumber}}</span>
-            <span *ngIf="measure.sensor.tyre==null">
-              No Tyre Selected <i class="fas fa-angry"></i>
-            </span>
-          </div>
-          <div class="mb-2">
-            <small class="text-muted"><i class="fas fa-plane"></i> Vehicle:  </small>
-            
-            <ng-container *ngIf="measure.sensor.tyre!=null && 
+  <div class="modal-body ">
+
+    <ul class="list-group mb-3 list-group-item d-flex">
+      <div class="mb-2">
+        <small class="text-muted"><i class="fas fa-compress-arrows-alt"></i> Pressure: </small>
+        <span>{{measure.pressure}} Pa</span>
+      </div>
+      <div class="mb-2">
+        <small class="text-muted"><i class="fas fa-temperature-low"></i> Temperature: </small>
+        <span>{{measure.temperature}} °C</span>
+      </div>
+      <div class="mb-2">
+        <small class="text-muted"><i class="fas fa-clock"></i> dateOfMeasure: </small>
+        <span class="text-info">{{measure.dateOfMeasure}}</span>
+      </div>
+      <div class="mb-2">
+        <small class="text-muted"><i class="fas fa-bell"></i> Sensor: </small>
+        <span>{{measure.sensor.name}}</span>
+      </div>
+      <div class="mb-2">
+        <small class="text-muted"><i class="fas fa-dot-circle"></i> Tyre: </small>
+        <span *ngIf="measure.sensor.tyre!=null">{{measure.sensor.tyre.serialNumber}}</span>
+        <span *ngIf="measure.sensor.tyre==null">
+          No Tyre Selected <i class="fas fa-angry"></i>
+        </span>
+      </div>
+      <div class="mb-2">
+        <small class="text-muted"><i class="fas fa-plane"></i> Vehicle: </small>
+
+        <ng-container *ngIf="measure.sensor.tyre!=null && 
             measure.sensor.tyre.mounting!=null &&
             measure.sensor.tyre.mounting.vehicle!=null; else elseTemplate">
-              {{measure.sensor.tyre.mounting.vehicle.type}}
-            </ng-container>
-            <ng-template #elseTemplate>
-              Vehicle Not Mounted <i class="fas fa-angry"></i>
-            </ng-template>
-          </div>
-      </ul>
-      
-    </div>
+          {{measure.sensor.tyre.mounting.vehicle.type}}
+        </ng-container>
+        <ng-template #elseTemplate>
+          Vehicle Not Mounted <i class="fas fa-angry"></i>
+        </ng-template>
+      </div>
+    </ul>
+
+  </div>
 </ng-template>
 <!-- end details of measure -->

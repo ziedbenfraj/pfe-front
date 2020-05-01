@@ -16,9 +16,9 @@ export class RolesComponent implements OnInit {
   modalRef: BsModalRef;
   // variables
   public role: Role;
-  private roles:Role[];
-  constructor(private _roleService:RoleService,private _router:Router,
-    private _authService:AuthenticationService,
+  private roles: Role[];
+  constructor(private _roleService: RoleService, private _router: Router,
+    private _authService: AuthenticationService,
     private modalService: BsModalService) { }
 
   ngOnInit() {
@@ -26,28 +26,28 @@ export class RolesComponent implements OnInit {
   }
 
   //get all roles
-  OnGetAllRoles(){
-    this._roleService.getRoles().subscribe((role)=>{
-      this.roles=role;
-    },(error)=>{
+  OnGetAllRoles() {
+    this._roleService.getRoles().subscribe((role) => {
+      this.roles = role;
+    }, (error) => {
       console.log(error);
     });
   }
 
   //update description of role
-  updateRole(role,template: TemplateRef<any>) {
-     this.role=role;
-     this.modalRef = this.modalService.show(template);
-   }
+  updateRole(role, template: TemplateRef<any>) {
+    this.role = role;
+    this.modalRef = this.modalService.show(template);
+  }
 
-   decline(): void {
+  decline(): void {
     this.modalRef.hide();
     this.ngOnInit();
   }
 
-   // update 
-   processForms(){
-     console.log(this.role);
+  // update 
+  processForms() {
+    console.log(this.role);
     this._roleService.updateRole(this.role).subscribe((role) => {
       console.log(role);
       this.ngOnInit();
@@ -56,20 +56,20 @@ export class RolesComponent implements OnInit {
     });
     this.ngOnInit();
     this.modalRef.hide();
-   }
+  }
 
   //  Auth
-  isAutheticated(){
+  isAutheticated() {
     return this._authService.isAutheticated();
   }
-  isAdmin(){
-    return this._authService.role=="ADMIN";
-    
+  isAdmin() {
+    return this._authService.role == "ADMIN";
+
   }
-  isUser(){
-    return this._authService.role=="USER";
+  isUser() {
+    return this._authService.role == "USER";
   }
-  userName(){
+  userName() {
     console.log(this._authService.username);
     return this._authService.username;
   }

@@ -8,27 +8,27 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor(private _authService:AuthenticationService) { }
+  constructor(private _authService: AuthenticationService) { }
 
   ngOnInit() {
   }
 
   //return true if exist role 
-  isAutheticated(){
+  isAutheticated() {
     return this._authService.isAutheticated();
   }
 
   //verify admin or not
-  isAdmin(){
-    return this._authService.role=="ADMIN";
-    
+  isAdmin() {
+    return this._authService.role == "ADMIN";
+
   }
 
-  isUser(){
-    return this._authService.role=="USER";
+  isUser() {
+    return this._authService.role == "USER";
   }
 
-  userName(){
+  userName() {
     console.log(this._authService.username);
     return this._authService.username;
   }

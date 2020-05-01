@@ -24,32 +24,31 @@ export class UserService {
 
   }
 
-  //get all roles
+  // get all Users
   getUsers() {
     return this._http.get(this.baseUrl, this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
-  };
-
+  }
+  // get User
   getUser(id: Number) {
     return this._http.get(this.baseUrl + '/' + id, this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
   }
-
+  // delete User
   deleteUser(id: Number) {
     return this._http.delete(this.baseUrl + '/' + id, this.options)
       .catch(this.errorHandler);
   }
-
+  // create User
   createUser(user: User) {
-    console.log("herre !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     console.log(user);
     return this._http.post(this.baseUrl, JSON.stringify(user), this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
   }
-  //update users
+  // update user
   updateUser(user: User) {
     console.log(user);
     return this._http.put(this.baseUrl, JSON.stringify(user), this.options)

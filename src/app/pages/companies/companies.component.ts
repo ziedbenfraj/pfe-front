@@ -14,16 +14,16 @@ import { Vehicles } from 'src/app/models/vehicles/vehicles';
 export class CompaniesComponent implements OnInit {
 
   modalRef: BsModalRef;
-  
+
   public companies: Companies[];
   public companie: Companies;
   public vehicles: Vehicles[];
 
-  public companyName:string="";
-  public operation:string="";
+  public companyName: string = "";
+  public operation: string = "";
   // constructor
   constructor(private _compService: CompaniesService, private _router: Router,
-    private _authService: AuthenticationService,private modalService: BsModalService) { }
+    private _authService: AuthenticationService, private modalService: BsModalService) { }
 
 
 
@@ -34,13 +34,13 @@ export class CompaniesComponent implements OnInit {
 
   // confrim Delete MODAL
   openModal(confirmDelete: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(confirmDelete, {class: 'modal-sm'});
+    this.modalRef = this.modalService.show(confirmDelete, { class: 'modal-sm' });
   }
   confirm(companie) {
     this.deleteCompanie(companie);
     this.modalRef.hide();
   }
- 
+
   decline(): void {
     this.modalRef.hide();
     this.ngOnInit();
@@ -66,14 +66,14 @@ export class CompaniesComponent implements OnInit {
   }
 
   //update
-  updateCompanie(companie,template: TemplateRef<any>) {
-    this.operation="Edit";
-    this.companie=companie;
+  updateCompanie(companie, template: TemplateRef<any>) {
+    this.operation = "Edit";
+    this.companie = companie;
     this.modalRef = this.modalService.show(template);
   }
   newCompanie(template: TemplateRef<any>) {
-    this.operation="Add";
-    this.companie=new Companies;
+    this.operation = "Add";
+    this.companie = new Companies;
     this.modalRef = this.modalService.show(template);
   }
 
@@ -101,7 +101,7 @@ export class CompaniesComponent implements OnInit {
 
 
 
-  closeForm(){
+  closeForm() {
     this.modalRef.hide();
   }
 
@@ -129,11 +129,11 @@ export class CompaniesComponent implements OnInit {
   }
 
   // function to show the vehicles of company
-  details(companie,companyDetail: TemplateRef<any>){
-    this.companie=companie;
-    this.vehicles=this.companie.vehicles;
-    this.companyName=companie.name;
-    this.modalRef = this.modalService.show(companyDetail, {class: 'modal-sm'});
+  details(companie, companyDetail: TemplateRef<any>) {
+    this.companie = companie;
+    this.vehicles = this.companie.vehicles;
+    this.companyName = companie.name;
+    this.modalRef = this.modalService.show(companyDetail, { class: 'modal-sm' });
   }
 
 }

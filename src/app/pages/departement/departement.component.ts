@@ -17,7 +17,7 @@ export class DepartementComponent implements OnInit {
 
   // modal
   modalRef: BsModalRef;
-  public operation:string="";
+  public operation: string = "";
   // variables
   public departements: Departement[];
   public departement: Departement;
@@ -33,7 +33,7 @@ export class DepartementComponent implements OnInit {
     this.OnGetAllDepartements()
   }
 
-  closeForm(){
+  closeForm() {
     this.modalRef.hide();
   }
 
@@ -56,14 +56,14 @@ export class DepartementComponent implements OnInit {
   }
 
   //update
-  updateDepartement(departement,template: TemplateRef<any>) {
-    this.departement=departement;
-    this.operation="Edit Departement";
+  updateDepartement(departement, template: TemplateRef<any>) {
+    this.departement = departement;
+    this.operation = "Edit Departement";
     this.modalRef = this.modalService.show(template);
   }
   newDepartement(template: TemplateRef<any>) {
-    this.departement=new Departement;
-    this.operation="Add new Departement";
+    this.departement = new Departement;
+    this.operation = "Add new Departement";
     this.modalRef = this.modalService.show(template);
   }
 
@@ -108,14 +108,14 @@ export class DepartementComponent implements OnInit {
 
   // confrim Delete MODAL
   openModal(confirmDelete: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(confirmDelete, {class: 'modal-sm'});
+    this.modalRef = this.modalService.show(confirmDelete, { class: 'modal-sm' });
   }
   confirm(departement) {
-    this.departement=departement;
+    this.departement = departement;
     this.deleteDepartement(departement);
     this.modalRef.hide();
   }
- 
+
   decline(): void {
     this.modalRef.hide();
     this.ngOnInit();

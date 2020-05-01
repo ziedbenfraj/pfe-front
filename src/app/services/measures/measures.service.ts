@@ -28,28 +28,28 @@ export class MeasuresService {
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
   };
-
+  // get Measure
   getMeasure(id: Number) {
     return this._http.get(this.baseUrl + '/' + id, this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
   }
-
+  // delete Measure
   deleteMeasure(id: Number) {
     return this._http.delete(this.baseUrl + '/' + id, this.options)
       .catch(this.errorHandler);
   }
-
+  // create Measure
   createMeasure(Measure: Measures) {
     return this._http.post(this.baseUrl, JSON.stringify(Measure), this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
   }
-  //update users
+  // update Measure
   updateMeasure(Measure: Measures) {
     return this._http.put(this.baseUrl, JSON.stringify(Measure), this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
-      
+
   }
 }

@@ -11,25 +11,25 @@ import { SensorsComponent } from './pages/sensors/sensors.component';
 import { MeasuresComponent } from './pages/measures/measures.component';
 
 const routes: Routes = [
-  {path: '', component: DashboardComponent},
+  { path: '', component: DashboardComponent },
   // dashboard path
-  {path: 'dashboard', component: DashboardComponent},
+  { path: 'dashboard', component: DashboardComponent },
   // dashboard path
-  {path: 'measures', component: MeasuresComponent},
+  { path: 'measures', component: MeasuresComponent },
   // roles path
-  {path: 'roles', component: RolesComponent},
+  { path: 'roles', component: RolesComponent },
   // path of departement
-  {path: 'departements', component: DepartementComponent},
+  { path: 'departements', component: DepartementComponent },
   // users
-  {path:'users',component:UsersComponent},
+  { path: 'users', component: UsersComponent },
   // companies
-  {path:'companies',component:CompaniesComponent},
+  { path: 'companies', component: CompaniesComponent },
   // vehicles
-  {path:'vehicles',component:VehiclesComponent},
+  { path: 'vehicles', component: VehiclesComponent },
   // tyres
-  {path:'tyres',component:TyresComponent},
+  { path: 'tyres', component: TyresComponent },
   // Sensors
-  {path:'sensors',component:SensorsComponent}
+  { path: 'sensors', component: SensorsComponent }
 
 
 ];

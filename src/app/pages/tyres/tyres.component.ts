@@ -23,46 +23,46 @@ export class TyresComponent implements OnInit {
   public addUpdate: boolean = false;
   public tyres: Tyre[];
   public tyreObj = new Tyre();
-  public tyre:Tyre;
+  public tyre: Tyre;
 
-  public detailMeasures:Measures[];
-  public showMeasure:boolean=false;
+  public detailMeasures: Measures[];
+  public showMeasure: boolean = false;
 
-  public sensors=new Array();
-  public vehicles:Vehicles[];
+  public sensors = new Array();
+  public vehicles: Vehicles[];
 
-  public mounting=new Mounting();
-  public vehicleSelected=new Vehicles();
+  public mounting = new Mounting();
+  public vehicleSelected = new Vehicles();
 
   modalRef: BsModalRef;
-  public operation:string="";
+  public operation: string = "";
 
 
   constructor(private _router: Router, private _authService: AuthenticationService,
-    private _tyreService: TyreService,private _sensorService: SensorsService,private modalService: BsModalService,
-    private _vehicleService:VehiclesService,private _mountingService:MountingService) { }
+    private _tyreService: TyreService, private _sensorService: SensorsService, private modalService: BsModalService,
+    private _vehicleService: VehiclesService, private _mountingService: MountingService) { }
 
   ngOnInit() {
     this.OnGetAllTyres();
   }
 
   //get vehicle
-  onGetVehicle(){
-    this._vehicleService.getVehicles().subscribe((vehicle)=>{
-      this.vehicles=vehicle;
-    },(error)=>{
+  onGetVehicle() {
+    this._vehicleService.getVehicles().subscribe((vehicle) => {
+      this.vehicles = vehicle;
+    }, (error) => {
       console.log(error);
     })
   }
 
-   // get sensor
-   onGetSensor() {
+  // get sensor
+  onGetSensor() {
     this._sensorService.getSensors().subscribe((sensor) => {
-      this.sensors=[];
+      this.sensors = [];
       sensor.forEach(item => {
-        if(item.tyre==null) this.sensors.push(item);
+        if (item.tyre == null) this.sensors.push(item);
       });
-      
+
     }, (error) => {
       console.log(error);
     });
@@ -89,17 +89,17 @@ export class TyresComponent implements OnInit {
     });
   }
 
- 
+
 
   //delete
   openModal(confirmDelete: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(confirmDelete, {class: 'modal-sm'});
+    this.modalRef = this.modalService.show(confirmDelete, { class: 'modal-sm' });
   }
   confirm(tyre) {
     this.deleteTyre(tyre);
     this.modalRef.hide();
   }
- 
+
   decline(): void {
     this.modalRef.hide();
     this.ngOnInit();
@@ -129,29 +129,29 @@ export class TyresComponent implements OnInit {
 
 
 
-  closeForm(){
+  closeForm() {
     this.modalRef.hide();
   }
 
-   //update
-   updateTyre(tyre,template: TemplateRef<any>) {
-    this.operation="Edit";
+  //update
+  updateTyre(tyre, template: TemplateRef<any>) {
+    this.operation = "Edit";
     this.onGetSensor();
     this.onGetVehicle();
     this.tyreObj = tyre;
 
     // if exist mounting load it 
-    if(this.tyreObj.mounting!=null){
-      this.mounting=this.tyreObj.mounting;
-      this.vehicleSelected=this.mounting.vehicle;
+    if (this.tyreObj.mounting != null) {
+      this.mounting = this.tyreObj.mounting;
+      this.vehicleSelected = this.mounting.vehicle;
     }
-    
-    
+
+
 
     this.modalRef = this.modalService.show(template);
   }
   newTyre(template: TemplateRef<any>) {
-    this.operation="Add";
+    this.operation = "Add";
     this.onGetSensor();
     this.onGetVehicle();
     this.modalRef = this.modalService.show(template);
@@ -159,17 +159,17 @@ export class TyresComponent implements OnInit {
 
   processForm() {
     // console.log(this.vehicleSelected.id);
-    
-    if(this.vehicleSelected.id!=null ){
-      this.mounting.vehicle=this.vehicleSelected;
-      this.tyreObj.mounting=this.mounting;
-    }else{
-      this.tyreObj.mounting=null;
+
+    if (this.vehicleSelected.id != null) {
+      this.mounting.vehicle = this.vehicleSelected;
+      this.tyreObj.mounting = this.mounting;
+    } else {
+      this.tyreObj.mounting = null;
     }
-    if(this.tyreObj.sensor==undefined){
-      this.tyreObj.sensor=null;
+    if (this.tyreObj.sensor == undefined) {
+      this.tyreObj.sensor = null;
     }
-    
+
     if (this.tyreObj.id == undefined) {
       this._tyreService.createTyre(this.tyreObj).subscribe((sensor) => {
         this.ngOnInit();
@@ -185,24 +185,24 @@ export class TyresComponent implements OnInit {
       });
     }
     this.closeForm();
-    
+
   }
 
   // details of tyre
-  details(tyre,tyreDetail){
-    this.tyre=tyre;
-    if(tyre.sensor!=null && tyre.sensor.measures!=null){
-      this.detailMeasures=tyre.sensor.measures;
-    }else{
-      this.detailMeasures=null;
+  details(tyre, tyreDetail) {
+    this.tyre = tyre;
+    if (tyre.sensor != null && tyre.sensor.measures != null) {
+      this.detailMeasures = tyre.sensor.measures;
+    } else {
+      this.detailMeasures = null;
     }
-    
+
     console.log(this.tyre);
     console.log(this.detailMeasures);
     this.modalRef = this.modalService.show(tyreDetail);
   }
-  showMeasures(){
-    this.showMeasure=!this.showMeasure;
+  showMeasures() {
+    this.showMeasure = !this.showMeasure;
   }
 
 }

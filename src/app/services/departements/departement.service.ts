@@ -30,26 +30,26 @@ export class DepartementService {
 
   }
 
-  //get all roles
+  //  get all Departements
   getDepartements() {
     return this._http.get(this.baseUrl, this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
   }
 
-
+  // getDepartement
   getDepartement(id: Number) {
     return this._http.get(this.baseUrl + '/' + id, this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
   }
-
+  // deleteDepartement
   deleteDepartement(id: Number) {
 
     return this._http.delete(this.baseUrl + '/' + id, this.options)
       .catch(this.errorHandler);
   }
-
+  // createDepartement
   createDepartement(departement: Departement) {
     console.log("herre");
     console.log(departement);
@@ -57,7 +57,7 @@ export class DepartementService {
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
   }
-  //update users
+  // updateDepartement
   updateDepartement(departement: Departement) {
     console.log(departement);
     return this._http.put(this.baseUrl, JSON.stringify(departement), this.options)

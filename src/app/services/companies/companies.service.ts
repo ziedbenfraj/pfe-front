@@ -23,32 +23,32 @@ export class CompaniesService {
 
   }
 
-  //get all roles
+  //get all Companies
   getCompanies() {
     return this._http.get(this.baseUrl, this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
   }
 
-
+  // get Companie
   getCompanie(id: Number) {
     return this._http.get(this.baseUrl + '/' + id, this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
   }
-
+  // deleteCompanies
   deleteCompanies(id: Number) {
 
     return this._http.delete(this.baseUrl + '/' + id, this.options)
       .catch(this.errorHandler);
   }
-
+  // createCompanies
   createCompanies(companies: Companies) {
     return this._http.post(this.baseUrl, JSON.stringify(companies), this.options)
       .map((response: Response) => response.json())
       .catch(this.errorHandler);
   }
-  //update users
+  // updateCompanies
   updateCompanies(companies: Companies) {
     console.log(companies);
     return this._http.put(this.baseUrl, JSON.stringify(companies), this.options)

@@ -17,7 +17,7 @@ export class MountingService {
   // private headers=new Headers({'content-type':'application/json'});
   private header = new Headers({ "Authorization": 'Bearer ' + this._authService.jwt, "Content-Type": "application/json" })
   private options = new RequestOptions({ headers: this.header });
-
+  // delete Mounting
   deleteMounting(id: Number) {
 
     return this._http.delete(this.baseUrl + '/' + id, this.options)
